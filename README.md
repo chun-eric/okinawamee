@@ -11,14 +11,12 @@ The project was made in React Vite, Javascript SWC, Tailwind CSS. Remote and loc
 
 This is probably the most important. Planning the project and having pre-designs, page layouts, images/image references and mockups already in place exponentially increases the efficiency of the project.
 
-What are the color schemes of the project? 
-Ideally the designer would have finished and prepared everything for you. 
-
-
+What are the color schemes of the project?
+Ideally the designer would have finished and prepared everything for you.
 
 ### Step 1 - Page Outlines
-Create basic wireframes for each page
 
+Create basic wireframes for each page
 
 - Home Page
 
@@ -44,17 +42,54 @@ Create basic wireframes for each page
 
 ### Step 4 - Setting Up Folder Structure
 
+This is just a preliminary.
+
 src/
-├── components/
-│ ├── layout/
-│ ├── products/
-│ ├── cart/
-│ └── ui/
-├── pages/
-├── context/
-├── hooks/
-├── utils/
-└── assets/
+├── assets/ # Static assets
+│ ├── images/ # All images
+│ └── icons/ # Icon files
+│
+├── components/ # Reusable components
+│ ├── layout/ # Layout components
+│ │ ├── Header.jsx
+│ │ ├── Footer.jsx
+│ │ └── Navigation.jsx
+│ │
+│ ├── product/ # Product-related components
+│ │ ├── ProductCard.jsx
+│ │ ├── ProductGrid.jsx
+│ │ └── ProductDetail.jsx
+│ │
+│ ├── cart/ # Cart components
+│ │ ├── CartItem.jsx
+│ │ └── CartSummary.jsx
+│ │
+│ └── ui/ # Common UI components
+│ ├── Button.jsx
+│ ├── Input.jsx
+│ └── Card.jsx
+│
+├── pages/ # Page components
+│ ├── Home.jsx
+│ ├── ProductListing.jsx
+│ ├── ProductDetail.jsx
+│ ├── Cart.jsx
+│ └── Checkout.jsx
+│
+├── context/ # React Context
+│ └── CartContext.jsx
+│
+├── data/ # Mock data files
+│ └── products.js # Product data
+│
+├── hooks/ # Custom hooks
+│ └── useCart.js
+│
+├── utils/ # Helper functions
+│ └── formatters.js
+│
+├── App.jsx
+└── index.jsx
 
 ### Step 5 - Component Design
 
