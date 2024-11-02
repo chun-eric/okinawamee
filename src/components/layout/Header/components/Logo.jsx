@@ -5,7 +5,7 @@ function Logo() {
   return (
     <Link to='/'>
       <img
-        className='h-20 w-auto'
+        className='h-12 md:h-14 lg:h-20 w-auto '
         src={mauimeeLogo} // Use the imported variable here
         alt='MauiMee Logo'
       />
