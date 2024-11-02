@@ -94,6 +94,7 @@ src/
 ### Step 5 - Component Design
 
 - Home Page:
+  Add Header and Navigation (on all pages )
   Add a Banner component (e.g., "Shop Our Latest Shoes").
   Add a Product Category Section (links to different categories).
 
