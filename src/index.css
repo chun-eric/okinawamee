@@ -1,3 +1,53 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  h1 {
+    @apply font-poppins font-bold text-5xl text-gray-900;
+  }
+  h2 {
+    @apply font-poppins font-semibold text-3xl text-gray-900;
+  }
+  h3 {
+    @apply font-poppins font-medium text-2xl text-gray-800;
+  }
+  h4 {
+    @apply font-poppins font-medium text-xl text-gray-800;
+  }
+  p {
+    @apply font-inter text-base text-gray-900 leading-relaxed;
+  }
+
+  footer h4 {
+    @apply font-inter font-bold text-[0.9rem] text-white mb-5 mt-5 uppercase hover:underline cursor-pointer tracking-[1.7px];
+  }
+  footer p {
+    @apply font-poppins text-sm  text-white leading-relaxed cursor-pointer hover:text-slate-200;
+  }
+  footer img {
+    @apply w-[45px] h-[45px] cursor-pointer;
+  }
+  nav {
+    @apply font-inter text-sm font-medium;
+  }
+  button {
+    @apply font-inter font-medium;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply font-inter font-medium px-4 py-2 bg-primary text-white rounded-md 
+    hover:bg:btn-secondary transition-colors;
+  }
+
+  .btn-secondary {
+    @apply font-inter font-meidium px-4 py-2 bg-secondary text-white rounded-md
+    hover: bg:btn-secondary transition-colors;
+  }
+  .btn-outline {
+    @apply font-inter font-medium px-4 py-2 text-white rounded-md
+    hover: bg:btn-secondary transition-colors;
+  }
+}

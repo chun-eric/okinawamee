@@ -4,9 +4,11 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: "#212a2f",
-        secondary: "#b6a7a0",
-        accent: "#ff4f00",
+        primary: "#FF8157",
+        secondary: "#4587AF",
+        accent: "#FFE66D",
+        customDarkBlue: "#2C3E50",
+        customFooterBackground: "#212121",
       },
       fontFamily: {
         inter: ["Inter", "sans-serif"],

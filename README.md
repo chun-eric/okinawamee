@@ -144,9 +144,37 @@ Day #1 - Finished the Header Layout and Mobile Responsiveness.
 ![alt text](image-1.png)
 ![alt text](image-2.png)
 
-TroubleShooting - 
+TroubleShooting -
 
-Day #2 - 
+Day #2 -
 
+TroubleShooting
 
-TroubleShooting - How do I get the fonts to be universal in Tailwind? Just add it in the index.css folder
+- How do I get the fonts to be universal in Tailwind?
+  Solution: Import font via url, add it in App.css file and update in tailwind.config extend key property object like the following:  
+   `    fontFamily: {
+  inter: ["Inter", "sans-serif"],
+  poppins: ["Poppins", "sans-serif"],
+},.`
+
+- Add new @layer base to the index.css to style h1, h2, h3, p, button etc..
+- We can also add component stylings here for example we have three different button versions.
+- We added some basic button colors and hover states.
+
+```
+@layer components {
+  .btn-primary {
+    @apply font-inter font-medium px-4 py-2 bg-primary text-white rounded-md
+    hover:bg:btn-secondary transition-colors;
+  }
+
+  .btn-secondary {
+    @apply font-inter font-meidium px-4 py-2 bg-secondary text-white rounded-md
+    hover:bg:btn-secondary transition-colors;
+  }
+  .btn-outline {
+    @apply font-inter font-medium px-4 py-2 text-white rounded-md
+    hover:bg:btn-secondary transition-colors;
+  }
+}
+```
