@@ -8,11 +8,11 @@ function Header() {
     <>
       {/* Mobile Header Component */}
       <div className='lg:hidden'>
-        <header className='w-full fixed top-0 z-50'>
+        <header className='w-full fixed top-0 z-[9999] bg-white'>
           <MobileHeader />
         </header>
         {/* Spacer */}
-        <div className='h-16'></div>
+        <div className='h-20'></div>
       </div>
 
       {/* Desktop Header Component */}
