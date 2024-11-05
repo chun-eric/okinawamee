@@ -22,7 +22,7 @@ function MainNav() {
         <Link
           key={item.path}
           to={item.path}
-          className={` uppercase text-sm font-medium tracking-tight text-gray-900 hover:text-gray-700 hover:underline ${
+          className={` uppercase text-sm font-bold tracking-[1.7px] text-gray-900 hover:text-gray-700 hover:underline ${
             item.className || ""
           } `}
         >

@@ -137,3 +137,16 @@ For Version 2 make it in Redux for Enterprise Level Scalability.
 3. Run tests for responsivenssess.
 4. Run tests for links.
 5. Run tests for security.
+
+Day #1 - Finished the Header Layout and Mobile Responsiveness.
+
+![alt text](image.png)
+![alt text](image-1.png)
+![alt text](image-2.png)
+
+TroubleShooting - 
+
+Day #2 - 
+
+
+TroubleShooting - How do I get the fonts to be universal in Tailwind? Just add it in the index.css folder
