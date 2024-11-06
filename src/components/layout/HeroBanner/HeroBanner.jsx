@@ -58,8 +58,10 @@ const HeroBanner = () => {
             {/* Content Overlay */}
             <div className='absolute inset-0 flex flex-col'>
               {/* Desktop Content Overlay */}
-              <div className='hidden md:flex flex-col items-end p-12'>
-                <h2 className='text-5xl font-light mb-4'>{photo.title}</h2>
+              <div className='hidden md:flex flex-col items-end p-12 pt-20'>
+                <h2 className='text-5xl font-mono font-bold mb-4'>
+                  {photo.title}
+                </h2>
                 <p className='text-lg text-right max-w-md'>
                   {photo.description}
                 </p>
@@ -86,16 +88,18 @@ const HeroBanner = () => {
               ${
                 currentPhoto === index ? "bg-primary scale-150" : "bg-gray-400"
               }`}
-          />
+          >
+            {" "}
+          </button>
         ))}
       </div>
 
       {/* Hero Banner Buttons */}
-      <div className='absolute bottom-36 right-14 flex gap-4'>
-        <button className='bg-white px-8 py-3 hover:bg-primary transition-colors hover:text-white'>
+      <div className='absolute bottom-36 right-14 flex gap-3'>
+        <button className='bg-white font-bold px-8 py-3 rounded hover:bg-primary transition-colors hover:text-white'>
           SHOP MEN
         </button>
-        <button className='bg-white px-8 py-3 hover:bg-primary transition-colors hover:text-white'>
+        <button className='bg-white font-bold px-8 py-3 rounded hover:bg-primary transition-colors hover:text-white'>
           SHOP WOMEN
         </button>
       </div>

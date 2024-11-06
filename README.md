@@ -146,7 +146,7 @@ Day #1 - Finished the Header Layout and Mobile Responsiveness.
 
 TroubleShooting -
 
-Day #2 -
+Day #2 - Footer Finished
 
 TroubleShooting
 
@@ -178,3 +178,10 @@ TroubleShooting
   }
 }
 ```
+
+Day #3 - Hero Banner Finished
+The main part of the hero banner and its reponsiveness was completed today.
+
+However the buttons are not working nor does it link anywhere.
+
+Day #4 - Email Subscribe and Core Values
