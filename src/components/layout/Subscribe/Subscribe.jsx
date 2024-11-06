@@ -9,18 +9,19 @@ export const Subscribe = () => {
         </p>
         <div className='w-full flex flex-col md:flex-row max-w-lg gap-2'>
           <input
+            aria-label='Enter Your Email Address'
+            autoComplete='off'
             className='flex-1 rounded px-4 py-3 
-             border border-[customFooterBackground] 
-             transition-all duration-400 ease-in-out
-             ring-0
-             focus:ring-offset-0
-             focus:border-[customFooterBackground] 
-             focus:ring-2 focus:ring-[customFooterBackground] 
-             focus:outline-none placeholder-bold'
+             border 
+             transition-all ease-in-out
+             font-bold
+             focus:border-customFooterBackground
+             focus:ring-1 focus:ring-customFooterBackground
+             focus:outline-none text-[0.9rem] tracking-[1.4px]'
             type='text'
             placeholder='Enter Your Email Address'
           />
-          <button className='rounded font-bold text-sm font-inter uppercase transition-all bg-customFooterBackground text-white px-6 py-3 hover:bg-primary tracking-[1.7px]'>
+          <button className='rounded font-bold text-sm font-inter uppercase transition-all bg-customFooterBackground text-white px-5 py-3 hover:bg-primary tracking-[1.7px]'>
             Sign Up
           </button>
         </div>
