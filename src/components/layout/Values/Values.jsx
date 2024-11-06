@@ -25,7 +25,7 @@ const Values = () => {
       </h2>
 
       <div className='grid grid-cols-1 gap-8 md:grid-cols-3 text-left'>
-        <div className='flex flex-col '>
+        <div className=''>
           <h3 className=' font-bold font-mono text-lg mb-2'>
             Island-Ready Comfort
           </h3>
