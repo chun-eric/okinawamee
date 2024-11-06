@@ -2,7 +2,7 @@ import "./App.css";
 import { CartProvider } from "./context/CartContext";
 import Header from "./components/layout/Header/Header";
 import Footer from "./components/layout/Footer/Footer";
-import TopBanner from "./components/layout/TopBanner/TopBanner";
+import HeroBanner from "./components/layout/HeroBanner/HeroBanner";
 
 function App() {
   // const [count, setCount] = useState(0);
@@ -10,7 +10,7 @@ function App() {
   return (
     <CartProvider>
       <Header />
-      <TopBanner />
+      <HeroBanner />
       <Footer />
     </CartProvider>
   );
