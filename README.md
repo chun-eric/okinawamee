@@ -179,9 +179,12 @@ TroubleShooting
 }
 ```
 
-Day #3 - Hero Banner Finished
-The main part of the hero banner and its reponsiveness was completed today.
+Day #3 - Hero Banner Finished, Values Component Finished
 
+The main part of the hero banner and its reponsiveness was completed today.
 However the buttons are not working nor does it link anywhere.
+
+Values Component Finished. 
+
 
 Day #4 - Email Subscribe and Core Values
