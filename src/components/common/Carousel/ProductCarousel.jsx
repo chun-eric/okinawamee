@@ -42,11 +42,11 @@ const ProductCarousel = ({ items }) => {
                     {item?.subtitle}
                   </p>
                 </div>
-                <div className='flex justify-center gap-2 mb-4 font-inter'>
-                  <button className='rounded flex-1 max-w-[180px] font-bold inline-block bg-white transition-colors hover:bg-primary hover:text-white px-8 py-3'>
+                <div className='flex flex-col justify-center items-center gap-2 mb-4 xl:flex-row  font-inter'>
+                  <button className='rounded flex-1 w-[180px] h-[48px] max-w-[180px] max-h-[48px] font-bold inline-block bg-white transition-colors hover:bg-primary hover:text-white px-8 py-3 text-sm'>
                     SHOP MEN
                   </button>
-                  <button className='rounded flex-1 max-w-[180px] font-bold  inline-block bg-white transition-colors hover:bg-primary hover:text-white px-8 py-3'>
+                  <button className='rounded flex-1 w-[180px] h-[48px] max-w-[180px] max-h-[48px] font-bold  inline-block bg-white transition-colors hover:bg-primary hover:text-white px-8 py-3 text-sm'>
                     SHOP WOMEN
                   </button>
                 </div>
@@ -56,7 +56,12 @@ const ProductCarousel = ({ items }) => {
         </div>
 
         {/* Mobile/Tablet Carousel View /*/}
-        <div className='lg:hidden w-full h-full overflow-x-auto snap-x snap-mandatory select-none'></div>
+        <div
+          className='lg:hidden w-full h-full overflow-x-auto snap-x snap-mandatory select-none'
+          style={{}}
+        >
+          <div className='flex w-full h-full'>{}</div>
+        </div>
       </div>
     </div>
   );

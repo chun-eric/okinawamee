@@ -205,3 +205,10 @@ There are few things to make.
 Problems- Each column is measured at 600x800 but why does it overflow the parent container?
 
 Solution: Change it to h-[calc(100vh)]. Previously it was set at h-[calc(100vh - 80px)] hence the overlap.
+
+
+Issues left:
+Problems-on Mobile devices how to setup the slider carousel. Oh boy....
+
+Issues left:
+Problem: I want the container of images to shrink with the parent container until it hits 992px
