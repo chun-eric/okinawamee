@@ -179,12 +179,24 @@ TroubleShooting
 }
 ```
 
-Day #3 - Hero Banner Finished, Values Component Finished
+Day #3 - Hero Banner Finished, Values Component Finished, Subscriber Component Finished
 
 The main part of the hero banner and its reponsiveness was completed today.
 However the buttons are not working nor does it link anywhere.
 
-Values Component Finished. 
+Values Component Finished.
 
+Subscriber Component Finished - Had trouble with the ring outline in tailwind.
+Solution: border
+transition-all ease-in-out
+font-bold
+focus:border-customFooterBackground
+focus:ring-1 focus:ring-customFooterBackground
 
-Day #4 - Email Subscribe and Core Values
+Day #4 - Main Collections Banner, Small Hero Banner and Bento Grid.
+
+This section will hard. 
+There are few things to make. 
+1. A resuable carousel component for the main collections and bento grid for medium screens and smaller. The Carousel is scrollable by mouse and hand drag. 
+2. Setup dummy data for both main collections and bento grid. 
+3. Think about the entire data for the products to build and where to store the data. Will it be here in my react project or do we use a headless CMS like Sanity to store and update all the data. 
