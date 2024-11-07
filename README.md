@@ -195,8 +195,13 @@ focus:ring-1 focus:ring-customFooterBackground
 
 Day #4 - Main Collections Banner, Small Hero Banner and Bento Grid.
 
-This section will hard. 
-There are few things to make. 
-1. A resuable carousel component for the main collections and bento grid for medium screens and smaller. The Carousel is scrollable by mouse and hand drag. 
-2. Setup dummy data for both main collections and bento grid. 
-3. Think about the entire data for the products to build and where to store the data. Will it be here in my react project or do we use a headless CMS like Sanity to store and update all the data. 
+This section will hard.
+There are few things to make.
+
+1. A resuable carousel component for the main collections and bento grid for medium screens and smaller. The Carousel is scrollable by mouse and hand drag.
+2. Setup dummy data for both main collections and bento grid.
+3. Think about the entire data for the products to build and where to store the data. Will it be here in my react project or do we use a headless CMS like Sanity to store and update all the data.
+
+Problems- Each column is measured at 600x800 but why does it overflow the parent container?
+
+Solution: Change it to h-[calc(100vh)]. Previously it was set at h-[calc(100vh - 80px)] hence the overlap.
