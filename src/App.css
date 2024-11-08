@@ -5,6 +5,8 @@ body {
   margin: 0;
   padding: 0;
   min-height: 100vh;
+  overflow-y: auto; /* Allows vertical scrolling and shows vertical scrollbar */
+  overflow-x: hidden; /* Allow horizontal scrolling */
 }
 
 #root {

@@ -193,7 +193,7 @@ font-bold
 focus:border-customFooterBackground
 focus:ring-1 focus:ring-customFooterBackground
 
-Day #4 - Main Collections Banner, Small Hero Banner and Bento Grid.
+Day #4 - Main Collections Banner,
 
 This section will hard.
 There are few things to make.
@@ -206,9 +206,49 @@ Problems- Each column is measured at 600x800 but why does it overflow the parent
 
 Solution: Change it to h-[calc(100vh)]. Previously it was set at h-[calc(100vh - 80px)] hence the overlap.
 
-
 Issues left:
 Problems-on Mobile devices how to setup the slider carousel. Oh boy....
 
 Issues left:
 Problem: I want the container of images to shrink with the parent container until it hits 992px
+
+Solution:
+
+- In the parent container i got rid of the h-[calc(100vh)]. The first child container is now set to h-full so it takes up 100% height of the parent container. This solved the issue of child elements shrinking and growing in proportion to screen size 992px and above.
+- In the third child container deleted `max-h-[830px] h-full max-h-[830px]` to `h-fit`. This will instead the height will shrink or expand based on its content.
+
+Day 5 - Main Collections Carousel Drag and Slide Functionality, Bento Grid Carousel Outline
+
+Problem - On Hover for Each Collection Column I want the card to show the button and scale the background image slightly.
+
+Problem - On small devices in the main collection section the height is taking up more space than the screen viewport for screen sizes below 1024px. I want to only take up 100% of the available screen size.
+
+Solution - This one was hard. Had to research. Added below Tailwind code.
+`md:h-[calc(100vh-theme(spacing.32))]`
+
+theme(spacing.32): references a predefined spacing value. spacing.32 corresponds to a spacing unit in Tailwind's spacing scale, which defaults to 8rem or 128px.
+
+Problem - I want to get rid of the horizontal scrollbar when screen size is below 1024px.
+
+Solutions - Delete overflow-x-auto. However this has caused another issue. See below
+
+Problem - The scrollbar is still showing despite fixing the mobile responsiveness.
+
+Solution - Had to install a package called `npm install tailwind-scrollbar-hide`. Created a new file in `src > types.d.ts`. Added `declare module 'tailwind-scrollbar-hide' {
+    const plugin: any;
+    export default plugin;
+}`
+In tailwind.config.js added: `import scrollbarHide from 'tailwind-scrollbar-hide' plugins: [scrollbarHide],`
+
+Hmm...seems like the below was a better solution.
+
+```
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  overflow-y: auto; /* Allows vertical scrolling and shows vertical scrollbar */
+  overflow-x: hidden; /* Allow horizontal scrolling */
+}
+```

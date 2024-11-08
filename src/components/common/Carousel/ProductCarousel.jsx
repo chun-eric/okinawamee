@@ -9,10 +9,10 @@ const ProductCarousel = ({ items }) => {
   const [buttonVisible, setButtonVisible] = useState(false); // to control the visibility of the buttons
 
   return (
-    <div className='w-full h-[calc(100vh)] bg-white '>
-      <div className='w-full  h-full relative py-12 px-8 '>
+    <div className='w-full  bg-white '>
+      <div className='w-full h-full relative py-12 px-8 '>
         {/* Desktop View /*/}
-        <div className='hidden lg:grid lg:grid-cols-3 gap-3 w-full h-full max-h-[830px] '>
+        <div className='hidden lg:grid lg:grid-cols-3 gap-3 w-full h-fit '>
           {items?.map((item, index) => (
             <div
               key={index}
@@ -44,10 +44,10 @@ const ProductCarousel = ({ items }) => {
                 </div>
                 <div className='flex flex-col justify-center items-center gap-2 mb-4 xl:flex-row  font-inter'>
                   <button className='rounded flex-1 w-[180px] h-[48px] max-w-[180px] max-h-[48px] font-bold inline-block bg-white transition-colors hover:bg-primary hover:text-white px-8 py-3 text-sm'>
-                    SHOP MEN
+                    SHOP NOW
                   </button>
                   <button className='rounded flex-1 w-[180px] h-[48px] max-w-[180px] max-h-[48px] font-bold  inline-block bg-white transition-colors hover:bg-primary hover:text-white px-8 py-3 text-sm'>
-                    SHOP WOMEN
+                    COLLECTION
                   </button>
                 </div>
               </div>
@@ -57,10 +57,64 @@ const ProductCarousel = ({ items }) => {
 
         {/* Mobile/Tablet Carousel View /*/}
         <div
-          className='lg:hidden w-full h-full overflow-x-auto snap-x snap-mandatory select-none'
-          style={{}}
+          className='lg:hidden w-full snap-x snap-mandatory select-none  scrollbar-hide'
+          style={{
+            scrollBehavior: "smooth",
+            scrollbarWidth: "none" /* Firefox */,
+            msOverflowStyle: "none" /* IE and Edge */,
+            WebkitOverflowScrolling: "touch",
+
+            "&::-webkit-scrollbar": {
+              display: "none" /* Chrome, Safari and Opera */,
+            },
+          }}
         >
-          <div className='flex w-full h-full'>{}</div>
+          <div className='flex gap-2 flex-row w-full '>
+            {items?.map((item, index) => (
+              <div
+                key={index}
+                className='min-w-full relative snap-center aspect-[3/4]  md:h-[calc(100vh-theme(spacing.32))] '
+                style={{ WebkitTapHighlightColor: "transparent" }}
+              >
+                <div className='absolute inset-0 rounded-md border border-slate-900'>
+                  {item.type === "video" ? (
+                    <video
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      className='w-full h-full object-cover'
+                      src={item?.src}
+                    />
+                  ) : (
+                    <img
+                      className='w-full h-full object-cover'
+                      src={item?.src || "https://placehold.co/600x800"}
+                      alt={item?.title || "Product Image"}
+                    />
+                  )}
+                </div>
+
+                {/* Contents Overlay */}
+                <div className='absolute inset-0 flex flex-col justify-between p-8'>
+                  <div className='text-white'>
+                    <h2 className='text-2xl md:text-2xl  font-semibold'>
+                      {item?.title}
+                    </h2>
+                    <p className='mt-2'>{item?.subtitle}</p>
+                  </div>
+                  <div className='flex justify-center items-center gap-2 mb-4 xl:flex-row  font-inter'>
+                    <button className='rounded flex-1  font-bold inline-block bg-white transition-colors hover:bg-primary hover:text-white px-8 py-3 text-sm'>
+                      SHOP NOW
+                    </button>
+                    <button className='rounded flex-1  font-bold inline-block bg-white transition-colors hover:bg-primary hover:text-white px-8 py-3 text-sm'>
+                      COLLECTION
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
