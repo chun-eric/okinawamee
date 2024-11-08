@@ -219,8 +219,6 @@ Solution:
 
 Day 5 - Main Collections Carousel Drag and Slide Functionality, Bento Grid Carousel Outline
 
-Problem - On Hover for Each Collection Column I want the card to show the button and scale the background image slightly.
-
 Problem - On small devices in the main collection section the height is taking up more space than the screen viewport for screen sizes below 1024px. I want to only take up 100% of the available screen size.
 
 Solution - This one was hard. Had to research. Added below Tailwind code.
@@ -252,3 +250,9 @@ body {
   overflow-x: hidden; /* Allow horizontal scrolling */
 }
 ```
+
+Problem - Adding slide and drag functionality
+Solution
+
+Problem - On Hover for Each Collection Column I want the card to show the button and scale the background image slightly.
+Solution
