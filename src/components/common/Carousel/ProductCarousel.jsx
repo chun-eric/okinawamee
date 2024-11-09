@@ -6,13 +6,14 @@ const ProductCarousel = ({ items }) => {
   const [startX, setStartX] = useState(0); // to store the starting X position of the slider
   const [scrollLeft, setScrollLeft] = useState(0); // to store the inital horizontal scroll position of the slider
   const sliderRef = useRef(null); // reference to the slider element
-  const [buttonVisible, setButtonVisible] = useState(false); // to control the visibility of the buttons
+  // const [buttonVisible, setButtonVisible] = useState(false); // to control the visibility of the buttons
 
   const handleDragStart = (e) => {
     setIsDragging(true);
     // get the starting X coordinate position from either mouse or touch
-    setStartX(e.pageX || e.touches?.[0].pageX || 0);
+    const pageX = e.type.includes("mouse") ? e.clientX : e.touches[0].clientX;
     // sets the initial horizontal scroll position of the slider
+    setStartX(pageX);
     // the below .scrollLeft is a property of the slider element in the DOM and not the scrollLeft state variable
     setScrollLeft(sliderRef.current.scrollLeft);
   };
@@ -21,16 +22,15 @@ const ProductCarousel = ({ items }) => {
   const handleDragMove = (e) => {
     // exit if not dragging
     if (!isDragging) return;
-
     // prevent default scrolling
     e.preventDefault();
 
     // get the current x position
-    const x = e.pageX || e.touches?.[0].pageX || 0;
+    const pageX = e.type.includes("mouse") ? e.clientX : e.touches[0].clientX;
 
     // calculate the distance moved
-    // we multiply by 2 for faster scrolling. 2 is a sensitivity factor.
-    const distance = (x - startX) * 2;
+    // add 2 to make the slider move faster
+    const distance = (pageX - startX) * 2;
 
     // Update the scroll position
     // checking if the sliderRef.current has been assigned. Yes we already assigned it to the carousel div element.
@@ -102,13 +102,12 @@ const ProductCarousel = ({ items }) => {
         {/* Mobile/Tablet Carousel View /*/}
         <div className='lg:hidden w-full snap-x snap-mandatory select-none  scrollbar-hide'>
           <div
-            className='flex gap-2 flex-row w-full '
+            className='flex gap-2 flex-row w-full overflow-x-auto cursor-grab active:cursor-grabbing touch-pan-x'
             style={{
               scrollBehavior: "smooth",
               scrollbarWidth: "none" /* Firefox */,
               msOverflowStyle: "none" /* IE and Edge */,
               WebkitOverflowScrolling: "touch",
-
               "&::-webkit-scrollbar": {
                 display: "none" /* Chrome, Safari and Opera */,
               },

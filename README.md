@@ -252,7 +252,103 @@ body {
 ```
 
 Problem - Adding slide and drag functionality
-Solution
+Solution - Add three handle functions start, move, end.
+One of the hard things was the tailwind classes.
+`cursor-grab active:cursor-grabbing touch-pan-x`
+
+```
+<div
+            className='flex gap-2 flex-row w-full overflow-x-auto cursor-grab active:cursor-grabbing touch-pan-x'
+            style={{
+              scrollBehavior: isDragging ? "auto" : "smooth",
+              scrollbarWidth: "none" /* Firefox */,
+              msOverflowStyle: "none" /* IE and Edge */,
+              WebkitOverflowScrolling: "touch",
+              "&::-webkit-scrollbar": {
+                display: "none" /* Chrome, Safari and Opera */,
+              },
+            }}
+            ref={sliderRef}
+            onMouseDown={handleDragStart}
+            onMouseMove={handleDragMove}
+            onMouseUp={handleDragEnd}
+            onMouseLeave={handleDragEnd}
+            onTouchStart={handleDragStart}
+            onTouchMove={handleDragMove}
+            onTouchEnd={handleDragEnd}
+          >
+
+```
+
+Problem - I want the slider to be infinite, meaning i want it to loop itself infinitely.
+
+Solution:
+Things we need to track
+
+1. Current scroll position
+2. Width of each slide
+3. Total width of all slides
+4. When we reached the start or end
+
+Concepts to Implement
+When user scrolls right and reaches end that means content going left:
+
+- We need duplicate of first items at the end
+- When we reach this duplicate we need to
+- Instantly or invisibly move them back to the real first items
+
+When user scrolls left and reaches end:
+
+- We need a duplicate of last items at the start
+- When they reach these duplicates
+- We need to instantly move them to the real last items
+
+Key Steps
+a. Data Structure
+
+- How should we modify our items array?
+- How many items should we duplicate?
+
+b. Scroll Position Detection
+
+- How do we know when user has reached duplicated items?
+- What scroll position triggers our "loop"?
+
+c. Smooth Transition
+
+- How do we make the position reset invisible to user?
+- How do we prevent flickering?
+
+` Visual Diagram`
+[C, A, B, C, A]
+^ ^ ^
+| | |
+| Real |
+Duplicate Duplicate
+
+` Right Scroll`
+[C, A, B, C, A]
+➡️ ➡️ ➡️
+
+When user reaches the duplicate 'C':
+[C, A, B, C, A]
+↩️
+Instantly jump back to the real 'C'
+
+` left Scroll`
+[C, A, B, C, A]
+⬅️ ⬅️ ⬅️
+
+When user reaches the duplicate 'C':
+[C, A, B, C, A]
+↪️
+Instantly jump to the real 'C'
+
+User never notices the "jump" because the duplicated items look identical
+We need to detect when user reaches these duplicate sections
+We instantly reset their position to the corresponding real section
+
+
 
 Problem - On Hover for Each Collection Column I want the card to show the button and scale the background image slightly.
 Solution

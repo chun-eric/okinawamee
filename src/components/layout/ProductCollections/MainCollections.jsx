@@ -25,6 +25,10 @@ const MainCollections = () => {
       collection: "kids",
     },
   ];
+
+  const createInfiniteItems = (items) => {
+    
+  }
   return <ProductCarousel items={collections} />;
 };
 
