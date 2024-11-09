@@ -348,6 +348,33 @@ User never notices the "jump" because the duplicated items look identical
 We need to detect when user reaches these duplicate sections
 We instantly reset their position to the corresponding real section
 
+Update the MainCollections collections array with the first and last item copied into a new array. Pass this as a new prop value in the MainCollections component.
+
+```
+ const createInfiniteItems = (items) => {
+    // Get copy of last item in the array
+    const lastItem = items[items.length - 1];
+    // Get copy of first item in the array
+    const firstItem = items[0];
+
+    // return new array with cloned item at start and end
+    return [lastItem, ...items, firstItem];
+  };
+
+  // create infinite collections
+  const infiniteCollections = createInfiniteItems(collections);
+```
+
+Now we need to know when the user reaches the cloned items. We need to know two things:
+
+- When user reaches the first clone (the duplicate last item)
+- When user reaches the last clone (the duplicate first item)
+
+create a new function called checkscrollPosition. We also need to use the sliderRef.
+
+- this will check our scrollWidth (entire carousel including the not visible parts), clientWidth (the view port only), currentScroll (which is the horizontal position from the left edge of the container)
+- now that we have these values implement logic to detect when we have reached our cloned items and need to loop back.
+
 
 
 Problem - On Hover for Each Collection Column I want the card to show the button and scale the background image slightly.

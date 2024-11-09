@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 
 const ProductCarousel = ({ items }) => {
@@ -7,6 +7,46 @@ const ProductCarousel = ({ items }) => {
   const [scrollLeft, setScrollLeft] = useState(0); // to store the inital horizontal scroll position of the slider
   const sliderRef = useRef(null); // reference to the slider element
   // const [buttonVisible, setButtonVisible] = useState(false); // to control the visibility of the buttons
+
+  // to check if the slider is being scrolled
+  const [isScrolling, setIsScrolling] = useState(false);
+
+  const checkScrollPosition = () => {
+    if (!sliderRef.current) return;
+
+    const slider = sliderRef.current;
+
+    // the total scrollable width of the carousel, which includes the content beyond the visible area.
+    const scrollWidth = slider.scrollWidth;
+
+    // the width of the visible part of the carousel (i.e., the viewport size of the scrollable container)
+    const clientWidth = slider.clientWidth;
+
+    // the current horizontal scroll position
+    const currentScroll = slider.scrollLeft;
+    console.log(scrollWidth, clientWidth, currentScroll);
+  };
+
+  useEffect(() => {
+    // setup phase
+    // when component mounts (first renders) this runs
+    // gets our slider ref from the DOM
+    // add a slide event listener to track user scroll
+    const slider = sliderRef.current;
+    if (slider) {
+      slider.addEventListener("scroll", checkScrollPosition);
+    }
+    // cleanup phase
+    // check if there is a component
+    // if there is component (is removed)run this code
+    // remove event listener to prevent memory leaks
+
+    return () => {
+      if (slider) {
+        slider.removeEventListener("scroll", checkScrollPosition);
+      }
+    };
+  }, []);
 
   const handleDragStart = (e) => {
     setIsDragging(true);
@@ -108,9 +148,9 @@ const ProductCarousel = ({ items }) => {
               scrollbarWidth: "none" /* Firefox */,
               msOverflowStyle: "none" /* IE and Edge */,
               WebkitOverflowScrolling: "touch",
-              "&::-webkit-scrollbar": {
-                display: "none" /* Chrome, Safari and Opera */,
-              },
+              // "&::-webkit-scrollbar": {
+              //   display: "none" /* Chrome, Safari, and Opera */,
+              // },
             }}
             ref={sliderRef}
             onMouseDown={handleDragStart}

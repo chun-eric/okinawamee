@@ -26,10 +26,21 @@ const MainCollections = () => {
     },
   ];
 
+  // function to create infinite items
   const createInfiniteItems = (items) => {
-    
-  }
-  return <ProductCarousel items={collections} />;
+    // Get copy of last item in the array
+    const lastItem = items[items.length - 1];
+    // Get copy of first item in the array
+    const firstItem = items[0];
+
+    // return new array with cloned item at start and end
+    return [lastItem, ...items, firstItem];
+  };
+
+  // create infinite collections
+  const infiniteCollections = createInfiniteItems(collections);
+
+  return <ProductCarousel items={infiniteCollections} />;
 };
 
 export default MainCollections;
