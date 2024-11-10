@@ -8,6 +8,7 @@ const ProductCarousel = ({ items }) => {
   const sliderRef = useRef(null); // reference to the slider element
   const [buttonVisible, setButtonVisible] = useState(false); // to control the visibility of the buttons
   const [isScrolling, setIsScrolling] = useState(false); // to check if the slider is being scrolled
+  const [isInitalized, setIsInitalized] = useState(false);
 
   // Get the original items (excluding clones)
   const originalItems = items.slice(1, -1);
@@ -16,15 +17,17 @@ const ProductCarousel = ({ items }) => {
   // this part is tricky for me
   useEffect(() => {
     const slider = sliderRef.current;
-    if (!slider) return;
-    // start at index 1 not 0
-    // slider.scrollLeft scrolls horizontally by the visible area - this was confusing at first
-    // settime out is used to wait for the DOM to initial render
-    setTimeout(() => {
+    if (!slider || isInitalized) return;
+
+    slider.style.scrollBehavior = "auto"; // Disable smooth scrolling initially
+    slider.scrollLeft = slider.clientWidth; // Set initial scroll position to first real item
+    setIsInitalized(true); // Mark as initialized
+
+    // Re-enable smooth scrolling after initial position is set
+    requestAnimationFrame(() => {
       slider.style.scrollBehavior = "smooth";
-      slider.scrollLeft = slider.clientWidth;
-    }, 0);
-  }, []);
+    });
+  }, [isInitalized]);
 
   const handleInfiniteScroll = () => {
     if (!sliderRef.current || isScrolling) return;
@@ -33,6 +36,15 @@ const ProductCarousel = ({ items }) => {
     const scrollWidth = slider.scrollWidth;
     const clientWidth = slider.clientWidth;
     const currentScroll = slider.scrollLeft;
+
+    console.log(
+      "Scroll position:",
+      currentScroll,
+      "Client width:",
+      clientWidth,
+      "Scroll width:",
+      scrollWidth
+    ); // Add this for debugging
 
     // When scrolling to the last clone (moving right)
     if (currentScroll >= scrollWidth - clientWidth * 1.5) {
@@ -45,11 +57,7 @@ const ProductCarousel = ({ items }) => {
       // Then smoothly scroll one slide right to create the infinite illusion
       requestAnimationFrame(() => {
         slider.style.scrollBehavior = "smooth";
-        slider.scrollLeft = clientWidth * 2;
-
-        // Reset after animation completes
         setTimeout(() => {
-          slider.style.scrollBehavior = "smooth";
           setIsScrolling(false);
         }, 200);
       });
@@ -61,16 +69,13 @@ const ProductCarousel = ({ items }) => {
 
       // First, instantly jump to the end (before last clone)
       slider.style.scrollBehavior = "auto";
-      slider.scrollLeft = scrollWidth - clientWidth * 2;
+      slider.scrollLeft = scrollWidth - clientWidth * 1.9;
 
       // Then smoothly scroll one slide left to create the infinite illusion
       requestAnimationFrame(() => {
         slider.style.scrollBehavior = "smooth";
-        slider.scrollLeft = scrollWidth - clientWidth * 2;
-
         // Reset after animation completes
         setTimeout(() => {
-          slider.style.scrollBehavior = "smooth";
           setIsScrolling(false);
         }, 200);
       });
@@ -78,64 +83,67 @@ const ProductCarousel = ({ items }) => {
   };
 
   useEffect(() => {
-    // setup phase when component mounts (first renders) this runs
-    // gets our slider ref from the DOM
-    // add a slide event listener to track user scroll
     const slider = sliderRef.current;
-    if (slider) {
-      slider.addEventListener("scroll", handleInfiniteScroll);
-    }
+    if (!slider) return;
 
-    // cleanup phase, check if there is a component
-    // if there is component (is removed )run this code
-    // remove event listener to prevent memory leaks
-    return () => {
-      if (slider) {
-        slider.removeEventListener("scroll", handleInfiniteScroll);
+    const handleScroll = () => {
+      if (!isScrolling) {
+        handleInfiniteScroll();
       }
     };
-  }, [isScrolling]);
+    slider.addEventListener("scroll", handleScroll);
+    return () => slider.removeEventListener("scroll", handleScroll);
+  });
 
   const handleDragStart = (e) => {
     setIsDragging(true);
-    // get the starting X coordinate position from either mouse or touch
     const pageX = e.type.includes("mouse") ? e.clientX : e.touches[0].clientX;
-    // sets the initial horizontal scroll position of the slider
     setStartX(pageX);
-    // the below .scrollLeft is a property of the slider element in the DOM and not the scrollLeft state variable
+
+    // Capture the current scroll position
     setScrollLeft(sliderRef.current.scrollLeft);
+
+    // Disable smooth scrolling during drag
+    if (sliderRef.current) {
+      sliderRef.current.style.scrollBehavior = "smooth";
+    }
   };
 
   // Handles the drag move
   const handleDragMove = (e) => {
-    // exit if not dragging
     if (!isDragging) return;
-    // prevent default scrolling
     e.preventDefault();
 
-    // get the current x position
     const pageX = e.type.includes("mouse") ? e.clientX : e.touches[0].clientX;
+    const walk = pageX - startX * 1.5; // Removed multiplier for more natural feel
 
-    // calculate the distance moved
-    // add 2 to make the slider move faster
-    const distance = (pageX - startX) * 2;
-
-    // Update the scroll position
-    // checking if the sliderRef.current has been assigned. Yes we already assigned it to the carousel div element.
-    // meaning the sliderRef.current is not null
     if (sliderRef.current) {
-      // update the new slider position
-      // this equation is quite deceptive
-      // Right Drag (scrollLeft - distance): Carousel scrolls left as content shifts left.
-      // Left Drag (scrollLeft - distance): Carousel scrolls right as content shifts right.
-      // I got confused here
-      sliderRef.current.scrollLeft = scrollLeft - distance;
+      sliderRef.current.scrollLeft = scrollLeft - walk;
     }
   };
 
   // Ends the drag
   const handleDragEnd = () => {
+    if (!isDragging || !sliderRef.current) return;
+
+    const slider = sliderRef.current;
+    const slideWidth = slider.clientWidth;
+    const currentScroll = slider.scrollLeft;
+
+    // Calculate the nearest slide
+    const slideNumber = Math.round(currentScroll / slideWidth);
+    const targetScroll = slideWidth * slideNumber;
+
+    // Re-enable smooth scrolling and snap to the nearest slide
+    slider.style.scrollBehavior = "smooth";
+    slider.scrollLeft = targetScroll;
+
     setIsDragging(false);
+
+    // Check infinite scroll after snapping
+    setTimeout(() => {
+      handleInfiniteScroll();
+    }, 200);
   };
 
   // const handleHover = () => {};
@@ -193,6 +201,7 @@ const ProductCarousel = ({ items }) => {
             className='flex gap-2 flex-row w-full overflow-x-auto cursor-grab active:cursor-grabbing touch-pan-x scroll-smooth'
             style={{
               scrollSnapType: "x mandatory",
+
               scrollbarWidth: "none" /* Firefox */,
               msOverflowStyle: "none" /* IE and Edge */,
               WebkitOverflowScrolling: "touch",
