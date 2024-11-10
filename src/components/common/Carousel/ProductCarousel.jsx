@@ -6,44 +6,85 @@ const ProductCarousel = ({ items }) => {
   const [startX, setStartX] = useState(0); // to store the starting X position of the slider
   const [scrollLeft, setScrollLeft] = useState(0); // to store the inital horizontal scroll position of the slider
   const sliderRef = useRef(null); // reference to the slider element
-  // const [buttonVisible, setButtonVisible] = useState(false); // to control the visibility of the buttons
+  const [buttonVisible, setButtonVisible] = useState(false); // to control the visibility of the buttons
+  const [isScrolling, setIsScrolling] = useState(false); // to check if the slider is being scrolled
 
-  // to check if the slider is being scrolled
-  const [isScrolling, setIsScrolling] = useState(false);
+  // Start the slider at index 1 not 0 which is the first real item
+  // this part is tricky for me
+  useEffect(() => {
+    const slider = sliderRef.current;
+    if (!slider) return;
+    // start at index 1 not 0
+    // slider.scrollLeft scrolls horizontally by the visible area - this was confusing at first
+    slider.scrollLeft = slider.clientWidth;
+  }, []);
 
-  const checkScrollPosition = () => {
+  const handleInfiniteScroll = () => {
     if (!sliderRef.current) return;
 
     const slider = sliderRef.current;
+    const scrollWidth = slider.scrollWidth; // total width of all slides
+    const clientWidth = slider.clientWidth; // width of visible area
+    const currentScroll = slider.scrollLeft; // current horizontal scroll position / how far user has scrolled from origin 0
 
-    // the total scrollable width of the carousel, which includes the content beyond the visible area.
-    const scrollWidth = slider.scrollWidth;
-
-    // the width of the visible part of the carousel (i.e., the viewport size of the scrollable container)
-    const clientWidth = slider.clientWidth;
-
-    // the current horizontal scroll position
-    const currentScroll = slider.scrollLeft;
     console.log(scrollWidth, clientWidth, currentScroll);
+
+    // scenario 1 - User scrolled to the start (1st clone)
+    // if the current scroll is less than 10% of the client Width. Imagine the client width is 600px. If the scroll is less than 60px.... that means the user is still at the first cloned item.
+    if (currentScroll < clientWidth * 0.1) {
+      // scrolling is true
+      setIsScrolling(true);
+
+      // we want the animation to the next slide to be smooth and not jump
+      slider.style.scrollBehavior = "smooth";
+
+      // we want to jump to the last real item
+      // why is clientWidth * 2?
+      // We need to jump to the beginning of the last real item which is the total slides width - 2 slide widths.
+      slider.scrollLeft = scrollWidth - clientWidth * 2;
+
+      // Renable smooth scrolling
+      // when the inital smooth jump occurs we wait for 50ms to renable smooth scrolling so it looks like one fluid transition
+      setTimeout(() => {
+        setIsScrolling(false);
+      }, 50);
+    }
+
+    // when user has scrolled through 3 full slides plus 90% of Real 3 trigger then start the jump
+    // remember the currentScroll starts from 0 which is the first cloned item
+    else if (currentScroll > scrollWidth - clientWidth * 2) {
+      // scrolling is true
+      setIsScrolling(true);
+
+      // if we are at the start clone, we want the animation to the next slide to be smooth and not jump
+      slider.style.scrollBehavior = "smooth";
+
+      // Jump to the second item (the first real item)
+      slider.scrollLeft = clientWidth;
+
+      // Renable smooth scrolling
+      // when the inital smooth jump occurs we wait for 50ms to renable smooth scrolling so it looks like one fluid transition
+      setTimeout(() => {
+        setIsScrolling(false);
+      }, 50);
+    }
   };
 
   useEffect(() => {
-    // setup phase
-    // when component mounts (first renders) this runs
+    // setup phase when component mounts (first renders) this runs
     // gets our slider ref from the DOM
     // add a slide event listener to track user scroll
     const slider = sliderRef.current;
     if (slider) {
-      slider.addEventListener("scroll", checkScrollPosition);
+      slider.addEventListener("scroll", handleInfiniteScroll);
     }
-    // cleanup phase
-    // check if there is a component
-    // if there is component (is removed)run this code
-    // remove event listener to prevent memory leaks
 
+    // cleanup phase, check if there is a component
+    // if there is component (is removed )run this code
+    // remove event listener to prevent memory leaks
     return () => {
       if (slider) {
-        slider.removeEventListener("scroll", checkScrollPosition);
+        slider.removeEventListener("scroll", handleInfiniteScroll);
       }
     };
   }, []);
