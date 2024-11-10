@@ -374,8 +374,13 @@ create a new function called checkscrollPosition. We also need to use the slider
 
 - this will check our scrollWidth (entire carousel including the not visible parts), clientWidth (the view port only), currentScroll (which is the horizontal position from the left edge of the container)
 - now that we have these values implement logic to detect when we have reached our cloned items and need to loop back.
-
-
+- we need to start on the real item 1 first.
+- create a handleInfiniteScroll function
+- make a cleanup function with useEffect for the handleInfiniteScroll
+- Add a smooth-scroll to the className and scrollSnapType x mandatory for the style
+- On the Actual Product Div we added scrollSnapAlign: "center" to the style attribute
+- Second issue is when scrolling to the clone
+- Had to split the items array one for desktop and one for Mobile that has clones. desktop uses the slice method to only have the origianl non cloned items.
 
 Problem - On Hover for Each Collection Column I want the card to show the button and scale the background image slightly.
 Solution

@@ -9,6 +9,9 @@ const ProductCarousel = ({ items }) => {
   const [buttonVisible, setButtonVisible] = useState(false); // to control the visibility of the buttons
   const [isScrolling, setIsScrolling] = useState(false); // to check if the slider is being scrolled
 
+  // Get the original items (excluding clones)
+  const originalItems = items.slice(1, -1);
+
   // Start the slider at index 1 not 0 which is the first real item
   // this part is tricky for me
   useEffect(() => {
@@ -16,57 +19,61 @@ const ProductCarousel = ({ items }) => {
     if (!slider) return;
     // start at index 1 not 0
     // slider.scrollLeft scrolls horizontally by the visible area - this was confusing at first
-    slider.scrollLeft = slider.clientWidth;
+    // settime out is used to wait for the DOM to initial render
+    setTimeout(() => {
+      slider.style.scrollBehavior = "smooth";
+      slider.scrollLeft = slider.clientWidth;
+    }, 0);
   }, []);
 
   const handleInfiniteScroll = () => {
-    if (!sliderRef.current) return;
+    if (!sliderRef.current || isScrolling) return;
 
     const slider = sliderRef.current;
-    const scrollWidth = slider.scrollWidth; // total width of all slides
-    const clientWidth = slider.clientWidth; // width of visible area
-    const currentScroll = slider.scrollLeft; // current horizontal scroll position / how far user has scrolled from origin 0
+    const scrollWidth = slider.scrollWidth;
+    const clientWidth = slider.clientWidth;
+    const currentScroll = slider.scrollLeft;
 
-    console.log(scrollWidth, clientWidth, currentScroll);
-
-    // scenario 1 - User scrolled to the start (1st clone)
-    // if the current scroll is less than 10% of the client Width. Imagine the client width is 600px. If the scroll is less than 60px.... that means the user is still at the first cloned item.
-    if (currentScroll < clientWidth * 0.1) {
-      // scrolling is true
+    // When scrolling to the last clone (moving right)
+    if (currentScroll >= scrollWidth - clientWidth * 1.5) {
       setIsScrolling(true);
 
-      // we want the animation to the next slide to be smooth and not jump
-      slider.style.scrollBehavior = "smooth";
-
-      // we want to jump to the last real item
-      // why is clientWidth * 2?
-      // We need to jump to the beginning of the last real item which is the total slides width - 2 slide widths.
-      slider.scrollLeft = scrollWidth - clientWidth * 2;
-
-      // Renable smooth scrolling
-      // when the inital smooth jump occurs we wait for 50ms to renable smooth scrolling so it looks like one fluid transition
-      setTimeout(() => {
-        setIsScrolling(false);
-      }, 50);
-    }
-
-    // when user has scrolled through 3 full slides plus 90% of Real 3 trigger then start the jump
-    // remember the currentScroll starts from 0 which is the first cloned item
-    else if (currentScroll > scrollWidth - clientWidth * 2) {
-      // scrolling is true
-      setIsScrolling(true);
-
-      // if we are at the start clone, we want the animation to the next slide to be smooth and not jump
-      slider.style.scrollBehavior = "smooth";
-
-      // Jump to the second item (the first real item)
+      // First, instantly jump back to the start (after first clone)
+      slider.style.scrollBehavior = "auto";
       slider.scrollLeft = clientWidth;
 
-      // Renable smooth scrolling
-      // when the inital smooth jump occurs we wait for 50ms to renable smooth scrolling so it looks like one fluid transition
-      setTimeout(() => {
-        setIsScrolling(false);
-      }, 50);
+      // Then smoothly scroll one slide right to create the infinite illusion
+      requestAnimationFrame(() => {
+        slider.style.scrollBehavior = "smooth";
+        slider.scrollLeft = clientWidth * 2;
+
+        // Reset after animation completes
+        setTimeout(() => {
+          slider.style.scrollBehavior = "smooth";
+          setIsScrolling(false);
+        }, 200);
+      });
+    }
+
+    // When scrolling to the first clone (moving left)
+    else if (currentScroll <= clientWidth * 0.5) {
+      setIsScrolling(true);
+
+      // First, instantly jump to the end (before last clone)
+      slider.style.scrollBehavior = "auto";
+      slider.scrollLeft = scrollWidth - clientWidth * 2;
+
+      // Then smoothly scroll one slide left to create the infinite illusion
+      requestAnimationFrame(() => {
+        slider.style.scrollBehavior = "smooth";
+        slider.scrollLeft = scrollWidth - clientWidth * 2;
+
+        // Reset after animation completes
+        setTimeout(() => {
+          slider.style.scrollBehavior = "smooth";
+          setIsScrolling(false);
+        }, 200);
+      });
     }
   };
 
@@ -87,7 +94,7 @@ const ProductCarousel = ({ items }) => {
         slider.removeEventListener("scroll", handleInfiniteScroll);
       }
     };
-  }, []);
+  }, [isScrolling]);
 
   const handleDragStart = (e) => {
     setIsDragging(true);
@@ -138,7 +145,7 @@ const ProductCarousel = ({ items }) => {
       <div className='w-full h-full relative py-12 px-8 '>
         {/* Desktop View /*/}
         <div className='hidden lg:grid lg:grid-cols-3 gap-3 w-full h-fit '>
-          {items?.map((item, index) => (
+          {originalItems?.map((item, index) => (
             <div
               key={index}
               className='relative w-full h-full border rounded-md  border-slate-900'
@@ -183,9 +190,9 @@ const ProductCarousel = ({ items }) => {
         {/* Mobile/Tablet Carousel View /*/}
         <div className='lg:hidden w-full snap-x snap-mandatory select-none  scrollbar-hide'>
           <div
-            className='flex gap-2 flex-row w-full overflow-x-auto cursor-grab active:cursor-grabbing touch-pan-x'
+            className='flex gap-2 flex-row w-full overflow-x-auto cursor-grab active:cursor-grabbing touch-pan-x scroll-smooth'
             style={{
-              scrollBehavior: "smooth",
+              scrollSnapType: "x mandatory",
               scrollbarWidth: "none" /* Firefox */,
               msOverflowStyle: "none" /* IE and Edge */,
               WebkitOverflowScrolling: "touch",
@@ -206,7 +213,10 @@ const ProductCarousel = ({ items }) => {
               <div
                 key={index}
                 className='min-w-full relative snap-center aspect-[3/4]  sm:h-[calc(100vh-theme(spacing.32))]'
-                style={{ WebkitTapHighlightColor: "transparent" }}
+                style={{
+                  WebkitTapHighlightColor: "transparent",
+                  scrollSnapAlign: "center",
+                }}
               >
                 <div className='absolute inset-0 rounded-md border border-slate-900'>
                   {item.type === "video" ? (
