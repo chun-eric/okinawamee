@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import mauimeeLogo from "../../../assets/icons/Mauimee_logo.svg";
+import okinawameeLogo from "../../../assets/icons/okinawamee_logo.svg";
 import instagram from "../../../assets/footer_assets/icons/sm-1.png";
 import youtube from "../../../assets/footer_assets/icons/sm-2.png";
 import twitter from "../../../assets/footer_assets/icons/sm-4.png";
@@ -18,8 +18,12 @@ const Footer = () => {
     <footer className='relative  w-full bg-customFooterBackground px-4 py-8 lg:px-8 mt-auto z-[1000]'>
       <div className='mx-auto max-w-7xl'>
         {/* Logo */}
-        <div className='flex justify-center mb-3'>
-          <img className='h-12 md:h-14 w-auto ' src={mauimeeLogo} alt='logo' />
+        <div className='flex justify-center  mb-3'>
+          <img
+            className='h-12 md:h-14 w-auto '
+            src={okinawameeLogo}
+            alt='logo'
+          />
         </div>
 
         {/* Main Footer content */}
@@ -27,9 +31,9 @@ const Footer = () => {
           {/* Contact and SM Icons */}
           <div className='flex flex-col items-center space-y-3 lg:items-start'>
             <h4>Contact</h4>
-            <p>562 Lewers St, Honolulu, HI</p>
-            <p>(+81) 01 2456 7894</p>
-            <p>mauishirts@mauimee.com</p>
+            <p>Kokusai Dori, Naha, Okinawa</p>
+            <p>(+81) 635 253 163</p>
+            <p>mauishirts@okinawamee.com</p>
 
             <div className='py-4 flex flex-col gap-0 '>
               <h4>Follow us</h4>

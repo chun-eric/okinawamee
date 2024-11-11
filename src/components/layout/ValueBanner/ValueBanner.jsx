@@ -9,10 +9,10 @@ const ValueBanner = () => {
             WEAVING TRADITION WITH TOMORROW
           </h2>
           <p className='text-base md:text-lg max-w-xl flex-wrap px-4 pb-3 z-50 mx-auto'>
-            We are Okinawan kariyushi shirts crafted with both Aloha spirit and
-            island heritage. Okinawa Mee shirts tells a story of our islands -
-            from the vibrant coral reefs to the gentle ocean breezes that shape
-            our Okinawa way of life.
+            The original Okinawan kariyushi shirts crafted with both Aloha
+            spirit and island heritage. Okinawa Mee shirts tells a story of our
+            islands - from the vibrant coral reefs to the gentle ocean breezes
+            that shape our Okinawa way of life.
           </p>
         </div>
 
