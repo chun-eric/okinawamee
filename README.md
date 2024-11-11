@@ -193,7 +193,7 @@ font-bold
 focus:border-customFooterBackground
 focus:ring-1 focus:ring-customFooterBackground
 
-Day #4 - Main Collections Banner,
+Day #4, 5, 6 - Main Collections Banner,
 
 This section will hard.
 There are few things to make.
@@ -384,3 +384,8 @@ create a new function called checkscrollPosition. We also need to use the slider
 
 Problem - On Hover for Each Collection Column I want the card to show the button and scale the background image slightly.
 Solution
+
+taking a break from this functionality. We spend too long on this. Will come back later for the final hover issue.
+
+
+Day #7 Value Banner and Bento Grid

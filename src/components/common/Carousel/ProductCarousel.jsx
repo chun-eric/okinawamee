@@ -13,19 +13,20 @@ const ProductCarousel = ({ items }) => {
   // Get the original items (excluding clones)
   const originalItems = items.slice(1, -1);
 
-  // Start the slider at index 1 not 0 which is the first real item
-  // this part is tricky for me
+  // Initialize carousel
   useEffect(() => {
     const slider = sliderRef.current;
     if (!slider || isInitalized) return;
 
     slider.style.scrollBehavior = "auto"; // Disable smooth scrolling initially
-    slider.scrollLeft = slider.clientWidth; // Set initial scroll position to first real item
-    setIsInitalized(true); // Mark as initialized
 
     // Re-enable smooth scrolling after initial position is set
     requestAnimationFrame(() => {
-      slider.style.scrollBehavior = "smooth";
+      slider.scrollLeft = slider.clientWidth; // Set initial scroll position to first real item
+      setIsInitalized(true); // Mark as initialized
+      setTimeout(() => {
+        slider.style.scrollBehavior = "smooth";
+      }, 50);
     });
   }, [isInitalized]);
 
@@ -46,38 +47,38 @@ const ProductCarousel = ({ items }) => {
       scrollWidth
     ); // Add this for debugging
 
+    // Improved threshold calculations
+    const rightThreshold = scrollWidth - clientWidth * 2;
+    const leftThreshold = clientWidth;
+
     // When scrolling to the last clone (moving right)
-    if (currentScroll >= scrollWidth - clientWidth * 1.5) {
+    if (currentScroll >= rightThreshold) {
       setIsScrolling(true);
 
-      // First, instantly jump back to the start (after first clone)
-      slider.style.scrollBehavior = "auto";
-      slider.scrollLeft = clientWidth;
-
-      // Then smoothly scroll one slide right to create the infinite illusion
       requestAnimationFrame(() => {
-        slider.style.scrollBehavior = "smooth";
-        setTimeout(() => {
+        slider.scrollLeft = clientWidth;
+
+        requestAnimationFrame(() => {
+          slider.style.scrollBehavior = "smooth";
           setIsScrolling(false);
-        }, 200);
+        });
       });
     }
 
     // When scrolling to the first clone (moving left)
-    else if (currentScroll <= clientWidth * 0.5) {
+    else if (currentScroll <= leftThreshold * 0.1) {
       setIsScrolling(true);
 
       // First, instantly jump to the end (before last clone)
       slider.style.scrollBehavior = "auto";
-      slider.scrollLeft = scrollWidth - clientWidth * 1.9;
 
-      // Then smoothly scroll one slide left to create the infinite illusion
       requestAnimationFrame(() => {
-        slider.style.scrollBehavior = "smooth";
-        // Reset after animation completes
-        setTimeout(() => {
+        slider.scrollLeft = scrollWidth - clientWidth * 2;
+
+        requestAnimationFrame(() => {
+          slider.style.scrollBehavior = "smooth";
           setIsScrolling(false);
-        }, 200);
+        });
       });
     }
   };
@@ -99,8 +100,6 @@ const ProductCarousel = ({ items }) => {
     setIsDragging(true);
     const pageX = e.type.includes("mouse") ? e.clientX : e.touches[0].clientX;
     setStartX(pageX);
-
-    // Capture the current scroll position
     setScrollLeft(sliderRef.current.scrollLeft);
 
     // Disable smooth scrolling during drag
@@ -115,7 +114,7 @@ const ProductCarousel = ({ items }) => {
     e.preventDefault();
 
     const pageX = e.type.includes("mouse") ? e.clientX : e.touches[0].clientX;
-    const walk = pageX - startX * 1.5; // Removed multiplier for more natural feel
+    const walk = (pageX - startX) * 1.5; // Added multiplier for more responsive dragging
 
     if (sliderRef.current) {
       sliderRef.current.scrollLeft = scrollLeft - walk;
@@ -127,23 +126,15 @@ const ProductCarousel = ({ items }) => {
     if (!isDragging || !sliderRef.current) return;
 
     const slider = sliderRef.current;
-    const slideWidth = slider.clientWidth;
-    const currentScroll = slider.scrollLeft;
-
-    // Calculate the nearest slide
-    const slideNumber = Math.round(currentScroll / slideWidth);
-    const targetScroll = slideWidth * slideNumber;
-
-    // Re-enable smooth scrolling and snap to the nearest slide
-    slider.style.scrollBehavior = "smooth";
-    slider.scrollLeft = targetScroll;
-
     setIsDragging(false);
 
-    // Check infinite scroll after snapping
+    // Re-enable smooth scrolling
+    slider.style.scrollBehavior = "smooth";
+
+    // Check infinite scroll after a short delay
     setTimeout(() => {
       handleInfiniteScroll();
-    }, 200);
+    }, 50);
   };
 
   // const handleHover = () => {};

@@ -6,6 +6,7 @@ import HeroBanner from "./components/layout/HeroBanner/HeroBanner";
 import Values from "./components/layout/Values/Values";
 import { Subscribe } from "./components/layout/Subscribe/Subscribe";
 import MainCollections from "./components/layout/ProductCollections/MainCollections";
+import ValueBanner from "./components/layout/ValueBanner/ValueBanner";
 
 function App() {
   // const [count, setCount] = useState(0);
@@ -15,6 +16,7 @@ function App() {
       <Header />
       <HeroBanner />
       <MainCollections />
+      <ValueBanner />
       <Subscribe />
       <Values />
       <Footer />
