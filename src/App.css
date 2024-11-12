@@ -195,3 +195,12 @@ body {
   font-weight: 900;
   font-style: italic;
 }
+
+.overflow-x-auto::-webkit-scrollbar {
+  display: none; /* Hide scrollbar in Chrome, Safari, and newer Edge */
+}
+
+.overflow-x-auto {
+  -ms-overflow-style: none; /* Hide scrollbar in Internet Explorer and Edge */
+  scrollbar-width: none; /* Hide scrollbar in Firefox */
+}

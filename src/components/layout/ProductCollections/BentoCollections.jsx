@@ -1,5 +1,3 @@
-import { useState, useEffect, useRef } from "react";
-
 import HeroItem from "../../common/HeroItem";
 import MobileSlider from "../../common/MobileSlider";
 import ProductCard from "../../common/ProductCard";
@@ -8,7 +6,7 @@ const BentoCollections = () => {
   // dummy data
   const products = [
     {
-      image: "https://source.unsplash.com/collection/928423/400x400",
+      image: "https://placehold.co/400x400",
       title: "Hawaiin Orange Mode",
       color: "Natural White",
       description: "NEW NEUTRAL SHADES SO SUBTLE THEY CAN'T HELP BUT STAND OUT",
@@ -36,6 +34,9 @@ const BentoCollections = () => {
       price: 110,
     },
   ];
+
+  console.log("Products in BentoCollections:", products); // Debug log
+
   return (
     <div className='w-full h-full p-0 md:p-2'>
       {/* Desktop Layout */}
@@ -53,7 +54,10 @@ const BentoCollections = () => {
       <div className='md:hidden'>
         <HeroItem isMobile={true} />
         <div className='mt-4'>
-          <MobileSlider products={products} />
+          {/* Only render MobileSlider if products exist */}
+          {products && products.length > 0 && (
+            <MobileSlider products={products} />
+          )}
         </div>
       </div>
     </div>
