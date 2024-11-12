@@ -1,15 +1,15 @@
 import { useState, useEffect, useRef } from "react";
-import { ChevronLeft, ChevronRight, PrinterCheck } from "lucide-react";
 
 import HeroItem from "../../common/HeroItem";
 import MobileSlider from "../../common/MobileSlider";
+import ProductCard from "../../common/ProductCard";
 
 const BentoCollections = () => {
   // dummy data
   const products = [
     {
-      image: "https://placehold.co/400x400",
-      title: "HAWAIIAN ORANGE MODE",
+      image: "https://source.unsplash.com/collection/928423/400x400",
+      title: "Hawaiin Orange Mode",
       color: "Natural White",
       description: "NEW NEUTRAL SHADES SO SUBTLE THEY CAN'T HELP BUT STAND OUT",
       price: 120,
@@ -37,11 +37,16 @@ const BentoCollections = () => {
     },
   ];
   return (
-    <div className='w-full p-10'>
+    <div className='w-full h-full p-0 md:p-2'>
       {/* Desktop Layout */}
-      <div className='hidden md:grid grid-cols-2 gap-4'>
+      <div className='hidden h-full md:grid grid-cols-2 gap-4'>
         <HeroItem isMobile={false} />
-        <div className='grid grid-cols-2 gap-4'></div>
+        <div className='grid grid-cols-2 gap-4'>
+          {products.map((product, index) => (
+            // {...product} is a spread operator and passes all the properties of product object as props to the ProductCard. Very useful to know.
+            <ProductCard key={index} {...product} />
+          ))}
+        </div>
       </div>
 
       {/* Mobile Layout */}

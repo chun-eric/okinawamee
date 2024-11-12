@@ -12,18 +12,30 @@ const HeroItem = ({ isMobile }) => {
       </div>
       <div
         className={`absolute inset-0 flex flex-col justify-end text-left ${
-          isMobile ? "p-5" : "p-10"
+          isMobile ? "p-8" : "p-6"
         } text-white`}
       >
-        <h2 className={`${isMobile ? "text-2xl" : "text-3xl"} font-bold mb-2`}>
+        <h2 className={`${isMobile ? "text-3xl" : "text-2xl"} font-bold mb-2`}>
           New Season, New Styles
         </h2>
-        <p className='mb-4'>
-          The latest shoes to start winter on the right foot.
+        <p className='mb-6 md:mb-8 text-md md:text-lg'>
+          The latest Shirts from Okinawa Mee.
         </p>
-        <div className='flex'>
-          <button>SHOP MEN</button>
-          <button>SHOP WOMEN</button>
+        <div className='flex gap-3'>
+          <button
+            className={`bg-white px-8 py-3 text-xs sm:text-sm lg:text-md text-black rounded transition-colors  hover:bg-primary hover:text-white inline-block font-bold ${
+              isMobile ? "flex-1" : "px-7"
+            }`}
+          >
+            SHOP MEN
+          </button>
+          <button
+            className={`bg-white px-8 py-3 text-xs sm:text-sm lg:text-md text-black rounded transition-colors  hover:bg-primary hover:text-white inline-block font-bold ${
+              isMobile ? "flex-1" : "px-7"
+            }`}
+          >
+            SHOP WOMEN
+          </button>
         </div>
       </div>
     </div>
