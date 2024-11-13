@@ -51,7 +51,7 @@ const BentoCollections = () => {
       </div>
 
       {/* Mobile Layout */}
-      <div className='md:hidden'>
+      <div className='md:hidden '>
         <HeroItem isMobile={true} />
         <div className='mt-4'>
           {/* Only render MobileSlider if products exist */}

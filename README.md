@@ -402,3 +402,6 @@ products: PropTypes.arrayOf(PropTypes.object).isRequired,
 Doing propType checks would have helped fix the issue earlier.
 
 Day #9
+
+- Completed the Layout and Responsiveness of the Bento Collection.
+-

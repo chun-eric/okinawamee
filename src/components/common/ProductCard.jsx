@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 
 const ProductCard = ({ image, title, color, price }) => {
   return (
-    <div className='group relative  bg-white w-full'>
+    <div className='group relative  bg-white w-full curosr-pointer'>
       <div className='relative  overflow-hidden md:aspect-square border border-slate-900 group-hover/card:bg-black group-hover/card:scale-105 focus-within:scale-110 focus-within:bg-black'>
         <img
           src={image}
