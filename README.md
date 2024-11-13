@@ -1,7 +1,6 @@
-# MauiMee
+# Okinawa Mee
 
-MauiMee is an ecommerce frontend project I made that sells awesome Hawaiian shirts.
-Who doesn't like Hawaiian shirts?
+A react front end e-commerce project selling awesome Okinawa Kariyushi shirts. This project was inspired by my love for Okinawa and the shirts they wore. I have always liked Hawaiian shirts but noticed there wasn't any an ecommerce sites that sold Okinawa shirts. I thought this would be a great way to showcase Okinawa culture as well.
 
 ## 1. Install Dependencies and setup Project
 

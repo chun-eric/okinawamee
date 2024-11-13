@@ -16,6 +16,9 @@ export default {
         inter: ["Inter", "sans-serif"],
         poppins: ["Poppins", "sans-serif"],
       },
+      screens: {
+        xs: "480px", // Adds an extra-small breakpoint at 480px
+      },
     },
   },
   plugins: [scrollbarHide],

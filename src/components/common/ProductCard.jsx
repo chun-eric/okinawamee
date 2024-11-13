@@ -1,13 +1,13 @@
 import PropTypes from "prop-types";
 
-const ProductCard = ({ image, title, color, description, price }) => {
+const ProductCard = ({ image, title, color, price }) => {
   return (
-    <div className='group relative overflow-hidden bg-white'>
-      <div className='relative overflow-hidden aspect-square border border-slate-900 group-hover/card:bg-black group-hover/card:scale-105 focus-within:scale-110 focus-within:bg-black'>
+    <div className='group relative  bg-white w-full'>
+      <div className='relative  overflow-hidden md:aspect-square border border-slate-900 group-hover/card:bg-black group-hover/card:scale-105 focus-within:scale-110 focus-within:bg-black'>
         <img
           src={image}
           alt={title}
-          className=' w-full h-full object-cover transition-transform duration-300 group-hover:scale-105'
+          className=' w-full h-full object-cover object-center transition-transform duration-300 group-hover:scale-105'
         />
 
         {/* Hover Overlay */}
@@ -20,8 +20,10 @@ const ProductCard = ({ image, title, color, description, price }) => {
             Shop Now
           </button>
         </div>
-        <div className='mt-2 w-full flex justify-between  items-start absolute bottom-2 px-4 py-2'>
-          <div className='text-left '>
+
+        {/* Product Details */}
+        <div className='w-full flex justify-between  items-start absolute bottom-0  left-0 right-0 px-4 py-2 '>
+          <div className='text-left mb-2'>
             <p className='text-[0.85rem] font-bold mb-1'>{title}</p>
             <p className='text-gray-600 text-[0.85rem]'>{color}</p>
           </div>

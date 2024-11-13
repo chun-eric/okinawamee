@@ -36,13 +36,16 @@ const MobileSlider = ({ products }) => {
   }
 
   return (
-    <div className='w-full'>
+    <div className='w-full mb-4'>
       <div
         className='flex gap-4 overflow-x-auto snap-x snap-mandatory touch-pan-x '
         style={{ scrollbarWidth: "none", WebkitOverflowScrolling: "touch" }}
       >
         {triplicatedProducts.map((product, index) => (
-          <div key={index} className='min-w-[280px] flex-shrink-0 snap-start'>
+          <div
+            key={index}
+            className='w-[calc(80%-8px)] flex-shrink-0 snap-start'
+          >
             <ProductCard {...product} />
           </div>
         ))}
