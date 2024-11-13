@@ -387,18 +387,19 @@ Solution
 
 taking a break from this functionality. We spend too long on this. Will come back later for the final hover issue.
 
-
 Day #7 Value Banner and Bento Grid
-Value Banner finished. 
+Value Banner finished.
 May need to adjust picture
 Started on Bento Grid
 
 Day #8
 Got the outline of Bento Grid.
-Had trouble on the Mobile screen of the column grid. The products data wasnt being passed to the Mobile Slider. A lot of errors. It was saying an invalid data type. 
-Solution:  const MobileSlider = (products) => {} We needed to object destructure.
+Had trouble on the Mobile screen of the column grid. The products data wasnt being passed to the Mobile Slider. A lot of errors. It was saying an invalid data type.
+Solution: const MobileSlider = (products) => {} We needed to object destructure.
 MobileSlider.propTypes = {
-  products: PropTypes.arrayOf(PropTypes.object).isRequired,
+products: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 Doing propType checks would have helped fix the issue earlier.
+
+Day #9
