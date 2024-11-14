@@ -10,10 +10,10 @@ const MobileSlider = ({
   className = "",
 }) => {
   const sliderRef = useRef(null);
-  const [startX, setStartX] = useState(0);
-  const [isScrolling, setIsScrolling] = useState(false);
-  const [scrollLeft, setScrollLeft] = useState(0);
-  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0); // x position coordinate when dragging in relation to current viewport position
+  const [isTransitioning, setIsTransitioning] = useState(false); // tracks when to use smooth scrolling when slider jumps to the start/end of the list
+  const [contentScrollPosition, setContentScrollPosition] = useState(0); // initial scroll x drag position in relation to the entire sliders content
+  const [isDragging, setIsDragging] = useState(false); // tracks if currently dragging slider
 
   {
     /* error handing conditions */
@@ -23,7 +23,6 @@ const MobileSlider = ({
     return <div>Loading...</div>;
   }
 
-  // it showed this error
   if (!Array.isArray(products)) {
     console.log("Products is not an array");
     return <div>Invalid data format</div>;
@@ -57,7 +56,7 @@ const MobileSlider = ({
     console.log(intialScroll);
 
     // updates the scrollLeft state
-    setScrollLeft(intialScroll);
+    setContentScrollPosition(intialScroll);
   }, [products]);
 
   {
@@ -72,21 +71,86 @@ const MobileSlider = ({
     // e.pageX = x coords for mouse events
     // e.touches[0].clientX = x coords for touch events
     // save it to startX
-    setStartX(e.type.includes("mouse") ? e.pageX : e.touches[0].client);
+    setStartX(e.type.includes("mouse") ? e.pageX : e.touches[0].clientX);
 
     // Store the current content scroll position  relative to slider (which might be different from initialScroll)
     // this is not the mouse or touch even x axis point
-    setScrollLeft(sliderRef.current.scrollLeft);
+    setContentScrollPosition(sliderRef.current.scrollLeft);
   };
 
-  const handleDragMove = (e) => {};
+  const handleDragMove = (e) => {
+    // if dragging isnt enabled exit
+    if (!isDragging) return;
+
+    // prevent default behavior of event etc select text, self scrolling etc...
+    e.preventDefault();
+
+    // determine current x position horizontal position of the cursor or touch point
+    // a  line captures where cursor of finger is currently located horizontally
+    // give x coroderinate of the first touch point
+    // x is the current x position of the user moves
+    const x = e.type.includes("mouse") ? e.pageX : e.touches[0].clientX;
+
+    // startX is the x position where drag started in the handleDragStart function
+    // x is the current x position of the user moves
+    // 2 is the distance factor or doubles the distance
+    // walk represents the total distance the slider should scroll based on how the user has dragged
+    const walk = (startX - x) * 2;
+
+    // sets the slider's scrollLeft to a new position by adding the walk to the starting scroll position
+    sliderRef.current.scrollLeft = contentScrollPosition + walk;
+  };
 
   const handleDragEnd = () => {
     // disable dragging
     setIsDragging(false);
   };
 
-  const handleScroll = () => {};
+  const handleScroll = () => {
+    // if slider doesnt exist or slider is currently transitioning exit
+    if (!sliderRef.current || isTransitioning) return;
+
+    // get scroll and container properties
+    const scrollWidth = sliderRef.current.scrollWidth; // total width of all content inside the slider (both visible and non visible)
+
+    const containerWidth = sliderRef.current.clientWidth; // width of the visible area of the slider
+
+    const scrollLeft = sliderRef.current.scrollLeft; // current horizontal scroll position of the slider. Helps determing if user current position in the content is near the start or end of the content. Helps decide if a transition is needed.If scrolLeft increases, the content is being scrolled to the right direction but the content appears to the left side of the viewport. If scrollLeft decreases, the content is scrolled to the left direction but the content appears to the right side of the viewport.
+
+    // If we've scrolled near the end or start,n jump to the corresponding position
+
+    // check if near start of the slider content 1
+    // as scrollLeft value increases the content appears to move left but we are moving to the right through the content
+    // scrollWidth / 3 = width of a single set of items eg. 900px / 3 = 300px => width of a single set of items (set 1, set2, set3)
+    // why do we subtract containerWidth ? to create an offset before reaching the start ->
+    // Basically it is checking if scrollLeft < 0
+    // scrollLeft typically cant be zero  unless for infinite loop scenario
+    // simply the if condition is to detect if we are near the start of the scrollable content.
+    if (scrollLeft < scrollWidth / 3 - containerWidth) {
+      // transitioning is occuring
+      setIsTransitioning(true);
+
+      // Adjust scroll position by adding the width of a single set of item
+      // This makes the content push to the right by a single set
+      sliderRef.current.scrollLeft += scrollWidth / 3;
+
+      // wait 50ms before setting transitioning to false
+      setTimeout(() => setIsTransitioning(false), 50);
+    }
+    // Check if near the end of the content
+    // finding the start of the last slide of a set
+    // the point where where set 3 occurs
+    // so if the users scrollLeft position is greater than the beginning of set 3
+    else if (scrollLeft > (scrollWidth * 2) / 3) {
+      // transitioning is occuring
+      setIsTransitioning(true);
+
+      // Adjust scroll position by adding the width of a single set of item
+      // This makes the content push to the left by a single set
+      sliderRef.current.scrollLeft -= scrollWidth / 3;
+      setTimeout(() => setIsTransitioning(false), 50);
+    }
+  };
 
   return (
     <div className='w-full mb-4 cursor-pointer'>
@@ -96,9 +160,12 @@ const MobileSlider = ({
         style={{ scrollbarWidth: "none", WebkitOverflowScrolling: "touch" }}
         onMouseDown={handleDragStart}
         onTouchStart={handleDragStart}
+        onMouseMove={handleDragMove}
+        onTouchMove={handleDragMove}
         onMouseUp={handleDragEnd}
         onMouseLeave={handleDragEnd}
         onTouchEnd={handleDragEnd}
+        onScroll={handleScroll}
       >
         {triplicatedProducts.map((product, index) => (
           <div

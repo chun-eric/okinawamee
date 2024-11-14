@@ -11,7 +11,7 @@ const InfiniteMobileSlider = ({
 }) => {
   const sliderRef = useRef(null);
   const [startX, setStartX] = useState(0); // stores initial x coordinate when dragging starts
-  const [isTransitioning, setIsTransitioning] = useState(false); // tracks when to use scroll scrolling when slider jumps to the beginng/end of the list again
+  const [isTransitioning, setIsTransitioning] = useState(false); // tracks when to use  scrolling when slider jumps to the beginng/end of the list again
   const [scrollLeft, setScrollLeft] = useState(0); // tracks inital scroll position of slider when user first starts dragging
   const [isDragging, setIsDragging] = useState(false); // tracks if currently dragging slider
 
@@ -39,9 +39,8 @@ const InfiniteMobileSlider = ({
   const triplicatedProducts = [...products, ...products, ...products];
   console.log("Triplicated products length:", triplicatedProducts.length); // Verify triplication
 
-  {
-    /* Checking and initializing the scroll position */
-  }
+  {/* Checking and initializing the scroll position */}
+  
   useEffect(() => {
     if (!sliderRef.current) return;
 
@@ -58,9 +57,15 @@ const InfiniteMobileSlider = ({
   };
 
   const handleDragMove = (e) => {
+    // if dragging isnt enabled exit
     if (!isDragging) return;
+
+    // prevent default behavior of event etg select text, self scrolling etc...
     e.preventDefault();
 
+    // determine current x position horizontal position of the cursor or touch point
+    // a  line captures where cursor of finger is currently located horizontally
+    // give x coroderinate of the first touch point
     const x = e.type.includes("mouse") ? e.pageX : e.touches[0].clientX;
     const walk = (startX - x) * 2;
     sliderRef.current.scrollLeft = scrollLeft + walk;

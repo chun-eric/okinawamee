@@ -404,4 +404,8 @@ Doing propType checks would have helped fix the issue earlier.
 Day #9
 
 - Completed the Layout and Responsiveness of the Bento Collection.
--
+- Started half of the functionality of the mobile scroll
+
+
+Day #10 Complete Scrolling Functionality
+- 
