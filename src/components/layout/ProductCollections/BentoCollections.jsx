@@ -1,4 +1,5 @@
 import HeroItem from "../../common/HeroItem";
+import MobileSliderv2 from "../../common/MobileSliderv2";
 import MobileSlider from "../../common/MobileSlider";
 import ProductCard from "../../common/ProductCard";
 
@@ -56,7 +57,7 @@ const BentoCollections = () => {
         <div className='mt-4'>
           {/* Only render MobileSlider if products exist */}
           {products && products.length > 0 && (
-            <MobileSlider products={products} />
+            <MobileSliderv2 products={products} />
           )}
         </div>
       </div>
@@ -65,3 +66,7 @@ const BentoCollections = () => {
 };
 
 export default BentoCollections;
+
+{
+  /* <MobileSlider products={products} />; */
+}
