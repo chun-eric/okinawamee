@@ -8,6 +8,7 @@ import { Subscribe } from "./components/layout/Subscribe/Subscribe";
 import MainCollections from "./components/layout/ProductCollections/MainCollections";
 import ValueBanner from "./components/layout/ValueBanner/ValueBanner";
 import BentoCollections from "./components/layout/ProductCollections/BentoCollections";
+import MoreToShopCarousel from "./components/common/Carousel/MoreToShopCarousel";
 
 function App() {
   // const [count, setCount] = useState(0);
@@ -19,6 +20,7 @@ function App() {
       <MainCollections />
       <ValueBanner />
       <BentoCollections />
+      <MoreToShopCarousel />
       <Subscribe />
       <Values />
       <Footer />

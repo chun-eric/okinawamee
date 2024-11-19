@@ -12,54 +12,84 @@ const MobileSliderv2 = ({ products }) => {
   // Create virtual list with duplicates for smooth infinite scroll
   const virtualProducts = [...products, ...products, ...products];
 
+  // when component first loads calculates how wide one set of product is (85% width + 16px gap)
   useEffect(() => {
     if (scrollRef.current) {
-      // Initially position at the middle set
       const slider = scrollRef.current;
+      // offsetWidth is the width of the slider or visible area of the slider. It is 85% width + 16px gap
+      // we multiply this by the number of products to get the total horizontal width of all products in the slider
       const oneSetWidth = (slider.offsetWidth * 0.85 + 16) * products.length;
+      console.log("Products length", products.length);
+      console.log("One set width", oneSetWidth);
+      // Initially position at the middle set
       slider.scrollLeft = oneSetWidth;
     }
   }, [products.length]);
 
+  // handles infinite scroll
   const handleScroll = () => {
+    // check if slider exists and is not currently dragging
     if (scrollRef.current && !isDragging) {
       const slider = scrollRef.current;
+      // the total horizontal space needed to display one full set of products in the slider
       const oneSetWidth = (slider.offsetWidth * 0.85 + 16) * products.length;
+      console.log("handle scroll", oneSetWidth);
 
+      // is mouse scrolling left, aka the content is moving left but more content is appearing to the righ, and so  the slider is >= to two sets
       if (slider.scrollLeft >= oneSetWidth * 2) {
+        // go back to our original position (beginning of middle set)
         slider.scrollLeft = slider.scrollLeft - oneSetWidth;
-      } else if (slider.scrollLeft < oneSetWidth) {
+      }
+      // is mouse scrolling right, aka the content is moving right  but more content is appearing to the leftl,
+      // if is less than initial position set (aka it scrolled into the first duplicate set )
+      else if (slider.scrollLeft < oneSetWidth) {
         slider.scrollLeft = slider.scrollLeft + oneSetWidth;
       }
     }
   };
 
-  const snapToClosestItem = (slider, currentPosition) => {
-    const itemWidth = slider.offsetWidth * 0.85 + 16;
-    const nearestItem = Math.round(currentPosition / itemWidth);
-    return nearestItem * itemWidth;
-  };
+  // const snapToClosestItem = (slider, currentPosition) => {
+  //   const itemWidth = slider.offsetWidth * 0.85 + 16;
+  //   const nearestItem = Math.round(currentPosition / itemWidth);
+  //   return nearestItem * itemWidth;
+  // };
 
-  // Add window-level event listeners for mouse up
+  // Add window-level aka global event listeners for mouse up
+  // snaps the slider to the nearest product item after dragging
   useEffect(() => {
+    // function triggered when user releases mouse
     const handleGlobalMouseUp = () => {
+      // check if user is currently dragging
       if (isDragging) {
+        // stop dragging
         setIsDragging(false);
+
+        // check if slider exists
         if (scrollRef.current) {
           const slider = scrollRef.current;
+          // width of a single product card (including margin or gap)
           const itemWidth = slider.offsetWidth * 0.85 + 16;
+          // dragged right = positive value (because we are moving left to right)
+          // dragged left = negative value (because we are moving right to left)
+          // however when we drag right the products go in previous products direction aka -1
+          // however when we drag left it goes in the normal next direction aka 1
           const direction = dragDistance > 0 ? -1 : 1;
           const currentScrollPosition = slider.scrollLeft;
 
           // Calculate the target position based on the current scroll position and drag direction
-          let targetPosition = currentScrollPosition;
+          // offset means how many pixels left or right into a product card
           const offset = currentScrollPosition % itemWidth;
+          let targetPosition;
 
+          // direction is positive, that means the new cards are appearing to the right
           if (direction > 0) {
-            // Moving right - snap to next item
+            // target position is to snap to next item
+            // (itemWidth - offset) = how many pixels left to snap to the next item
             targetPosition = currentScrollPosition + (itemWidth - offset);
-          } else {
-            // Moving left - snap to previous item
+          }
+          // direction is positive, that means the new cards are appearing to the left
+          else {
+            // target position is to snap to the closest previous item
             targetPosition = currentScrollPosition - offset;
           }
 
@@ -71,10 +101,14 @@ const MobileSliderv2 = ({ products }) => {
       }
     };
 
+    // add event listener on the global window object
     window.addEventListener("mouseup", handleGlobalMouseUp);
+
+    // clean up function
     return () => window.removeEventListener("mouseup", handleGlobalMouseUp);
   }, [isDragging, dragDistance]);
 
+  // handles drag start
   const handleDragStart = (e) => {
     if (e.type.includes("mouse")) {
       e.preventDefault();
@@ -86,6 +120,7 @@ const MobileSliderv2 = ({ products }) => {
     setDragDistance(0);
   };
 
+  // handles drag move
   const handleDragMove = (e) => {
     if (!isDragging) return;
     e.preventDefault();

@@ -39,7 +39,7 @@ const BentoCollections = () => {
   console.log("Products in BentoCollections:", products); // Debug log
 
   return (
-    <div className='w-full h-full p-0 md:p-2'>
+    <div className='w-full h-full px-4 py-4 '>
       {/* Desktop Layout */}
       <div className='hidden h-full md:grid grid-cols-2 gap-4'>
         <HeroItem isMobile={false} />
