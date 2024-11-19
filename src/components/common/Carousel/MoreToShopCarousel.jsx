@@ -3,6 +3,8 @@ import { useState, useRef } from "react";
 const MoreToShopCarousel = () => {
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragDistance, setDragDistance] = useState(0);
   const [isHovering, setIsHovering] = useState(false);
   const sliderRef = useRef(null);
 
@@ -66,6 +68,7 @@ const MoreToShopCarousel = () => {
     },
   ];
 
+  // scroll function (left and right arrows)
   const scroll = (direction) => {
     const container = sliderRef.current;
     if (!container) return;
@@ -77,6 +80,56 @@ const MoreToShopCarousel = () => {
     });
   };
 
+  // handle where mouse drag started
+  // records initial click and stores current scroll position
+  const handleMouseDown = (e) => {
+    // e.pageX is the horizontal position of the mouse when clicked
+    // we subtract offsetLeft to get position relative to the slider
+    setStartX(e.pageX - sliderRef.current.offsetLeft);
+    // store current scroll position when we start dragging
+    setScrollLeft(sliderRef.current.scrollLeft);
+  };
+
+  // handle drag distance and scroll
+  // calculates the drag distance
+  // scrolls proportionally to drag distance
+  const handleMouseMove = (e) => {
+    // if no drag started (no startX value), return
+    if (!startX) return;
+
+    // prevent default browser dragging behavior
+    e.preventDefault();
+
+    // calculate how far we dragged from start point
+    const x = e.pageX - sliderRef.current.offsetLeft;
+    // calculate distance moved (2 means faster scrolling, 1 is normal)
+    const walk = (x - startX) * 2;
+
+    // update scroll position based on drag distance
+    sliderRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  // handle drag end and clean up when user releases on mouseup or mouseleave
+  const handleMouseUp = () => {
+    // reset start position to null to show drag has ended
+    setStartX(null);
+  };
+
+  // handle touch start
+  const handleTouchStart = (e) => {
+    setStartX(e.touches[0].pageX - sliderRef.current.offsetLeft);
+    setScrollLeft(sliderRef.current.scrollLeft);
+  };
+
+  const handleTouchMove = (e) => {
+    if (!startX) return;
+
+    const x = e.touches[0].pageX - sliderRef.current.offsetLeft;
+    const walk = (x - startX) * 2;
+
+    sliderRef.current.scrollLeft = scrollLeft - walk;
+  };
+
   return (
     <div className='relative max-w-full mx-auto px-4 my-6 flex flex-col md:my-12'>
       <div className='uppercase max-screen-full font-bold mb-4 flex text-left text-lg font-inter'>
@@ -85,7 +138,7 @@ const MoreToShopCarousel = () => {
       {/* Navigation Buttons */}
       <button
         onClick={() => scroll("right")}
-        className='absolute md:flex right-0 top-1/2 -translate-y-1/2 z-10 rounded-full p-2 '
+        className='absolute md:flex -right-1 top-1/2 -translate-y-1/2 z-10 rounded-full p-2 '
       >
         <svg
           xmlns='http://www.w3.org/2000/svg'
@@ -104,7 +157,7 @@ const MoreToShopCarousel = () => {
       </button>
       <button
         onClick={() => scroll("left")}
-        className='absolute md:flex left-0 top-1/2 -translate-y-1/2 z-10 rounded-full p-2'
+        className='absolute md:flex -left-1 top-1/2 -translate-y-1/2 z-10 rounded-full p-2'
       >
         <svg
           xmlns='http://www.w3.org/2000/svg'
@@ -124,17 +177,18 @@ const MoreToShopCarousel = () => {
       <div
         ref={sliderRef}
         className='flex overflow-x-auto scrollbar-hide snap-x snap-mandatory gap-2 '
-        onMouseDown={""}
-        onMouseMove={""}
-        onMouseUp={""}
-        onMouseLeave={""}
-        onTouchStart={""}
-        onTouchEnd={""}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseUp}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleMouseUp}
       >
         {products.map((product) => (
           <div
             key={product.id}
-            className='border border-slate-900 flex-none rounded-sm items-center w-[85%] sm:w-[45%] md:w-[31%] lg:w-[23%] xl:w-[18%] snap-start '
+            className=' cursor-pointer flex-none rounded-sm items-center w-[85%] sm:w-[45%] md:w-[31%] lg:w-[23%] xl:w-[18%] snap-start '
           >
             <img
               className='h-auto w-full object-cover rounded-sm'
