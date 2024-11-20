@@ -1,11 +1,10 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
 const MoreToShopCarousel = () => {
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const [dragDistance, setDragDistance] = useState(0);
-  const [isHovering, setIsHovering] = useState(false);
   const sliderRef = useRef(null);
 
   // dummy data
@@ -40,33 +39,157 @@ const MoreToShopCarousel = () => {
     },
     {
       id: 5,
-      name: "Urban Glide",
-      color: "Black",
-      price: 135,
+      name: "Urban Suede",
+      color: "Suede",
+      price: 130,
       image: "/api/placeholder/300/300",
     },
     {
       id: 6,
-      name: "Urban Glide",
-      color: "Black",
-      price: 135,
+      name: "Urban Purple",
+      color: "Purple",
+      price: 105,
       image: "/api/placeholder/300/300",
     },
     {
       id: 7,
-      name: "Urban Glide",
-      color: "Black",
+      name: "Urban Green",
+      color: "Green",
       price: 135,
       image: "/api/placeholder/300/300",
     },
     {
       id: 8,
-      name: "Urban Glide",
-      color: "Black",
-      price: 135,
+      name: "Urban Yellow",
+      color: "Yellow",
+      price: 125,
       image: "/api/placeholder/300/300",
     },
   ];
+
+  // Global Mouse up handler for smooth snapping
+  useEffect(() => {
+    const handleGlobalMouseUp = () => {
+      // if dragging is true
+      if (isDragging) {
+        // stop the dragging and set it false
+        setIsDragging(false);
+
+        // check if slider exists
+        if (sliderRef.current) {
+          // get the slider element store it in a variable for better access
+          const slider = sliderRef.current;
+
+          // Width of a single product card including gap
+          const itemWidth = slider.offsetWidth * 0.85 + 16;
+
+          // determine direction based on drag distance
+          // dragged right = positive value (because we are moving left to right)
+          // dragged left = negative value (because we are moving right to left)
+          // however when we drag right the products go in previous products direction aka -1
+          // however when we drag left it goes in the normal next direction aka 1
+          const direction = dragDistance > 0 ? -1 : 1;
+          // how far the slider has scrolled
+          const currentScrollPosition = slider.scrollLeft;
+
+          // calcuate offset from nearest snap point
+          const offset = currentScrollPosition % itemWidth;
+          let targetPosition;
+
+          // Calculate target position based on direction
+          if (direction > 0) {
+            targetPosition = currentScrollPosition + (itemWidth - offset);
+          } else {
+            // snap to previous item
+            targetPosition = currentScrollPosition - offset;
+          }
+
+          // smooth scroll to target Position
+          slider.scrollTo({
+            left: targetPosition,
+            behavior: "smooth",
+          });
+        }
+      }
+    };
+    // Function to handle mouseup event
+    window.addEventListener("mouseup", handleGlobalMouseUp);
+
+    // clean up the mouseup listener
+    return () => window.removeEventListener("mouseup", handleGlobalMouseUp);
+  }, [isDragging, dragDistance]);
+
+  // handles drag start
+  const handleDragStart = (e) => {
+    // prevent default behavior
+    if (e.type.includes("mouse")) {
+      e.preventDefault();
+    }
+    // dragging state is true
+    setIsDragging(true);
+
+    // record the start position
+    // clientX is the horizontal value x coordinate of the cursor
+    const pageX = e.type.includes("mouse") ? e.clientX : e.touches[0].clientX;
+    // update startX value
+    setStartX(pageX);
+    // update current initial scroll position from its leftmost position
+    setScrollLeft(sliderRef.current.scrollLeft);
+  };
+
+  // handles drag move
+  const handleDragMove = (e) => {
+    // if dragging is false return
+    if (!isDragging) return;
+    // prevent default behavior
+    e.preventDefault();
+
+    // determine current x position horizontal position of the cursor or touch point
+    const pageX = e.type.includes("mouse") ? e.clientX : e.touches[0].clientX;
+    // get the drag distance by subtracting pageX from startX // sensitivity factor of 0.8
+    // walk is basically the drag distance
+    const walk = (pageX - startX) * 0.8;
+    // update drag distance
+    setDragDistance(walk);
+
+    // check if slider exists
+    if (sliderRef.current) {
+      // get the slider element and save to slider variable
+      const slider = sliderRef.current;
+      // get current scroll left position
+      const currentScrollPosition = slider.scrollLeft;
+
+      // Only one scroll at a time (300px) at a time
+      // Add a small threshold to prevent accidental scrolls
+      if (Math.abs(walk) > 50) {
+        // calculate target position by adding walk to current scroll
+        // positive walk value means in a negative direction
+        // negative walk value means in a positive direction
+        const targetPosition = currentScrollPosition + (walk > 0 ? -300 : 300);
+
+        // calculate maximum we can scroll remaining
+        // scrollWidth is total width of all content
+        // clientWidth is the width of the viewport
+        const maxScroll = slider.scrollWidth - slider.clientWidth;
+
+        // ensure we dont scroll beyond the maximum possible scroll
+        const boundedPosition = Math.max(
+          0,
+          Math.min(targetPosition, maxScroll)
+        );
+
+        // scroll to the bounded position
+        slider.scrollTo({
+          left: slider.scrollLeft + targetPosition,
+          behavior: "smooth",
+        });
+
+        // Reset the start position to prevent continuous scrolling
+        setStartX(pageX);
+        setScrollLeft(boundedPosition);
+      }
+    }
+  };
 
   // scroll function (left and right arrows)
   const scroll = (direction) => {
@@ -78,56 +201,6 @@ const MoreToShopCarousel = () => {
       left: container.scrollLeft + scrollAmount,
       behavior: "smooth",
     });
-  };
-
-  // handle where mouse drag started
-  // records initial click and stores current scroll position
-  const handleMouseDown = (e) => {
-    // e.pageX is the horizontal position of the mouse when clicked
-    // we subtract offsetLeft to get position relative to the slider
-    setStartX(e.pageX - sliderRef.current.offsetLeft);
-    // store current scroll position when we start dragging
-    setScrollLeft(sliderRef.current.scrollLeft);
-  };
-
-  // handle drag distance and scroll
-  // calculates the drag distance
-  // scrolls proportionally to drag distance
-  const handleMouseMove = (e) => {
-    // if no drag started (no startX value), return
-    if (!startX) return;
-
-    // prevent default browser dragging behavior
-    e.preventDefault();
-
-    // calculate how far we dragged from start point
-    const x = e.pageX - sliderRef.current.offsetLeft;
-    // calculate distance moved (2 means faster scrolling, 1 is normal)
-    const walk = (x - startX) * 2;
-
-    // update scroll position based on drag distance
-    sliderRef.current.scrollLeft = scrollLeft - walk;
-  };
-
-  // handle drag end and clean up when user releases on mouseup or mouseleave
-  const handleMouseUp = () => {
-    // reset start position to null to show drag has ended
-    setStartX(null);
-  };
-
-  // handle touch start
-  const handleTouchStart = (e) => {
-    setStartX(e.touches[0].pageX - sliderRef.current.offsetLeft);
-    setScrollLeft(sliderRef.current.scrollLeft);
-  };
-
-  const handleTouchMove = (e) => {
-    if (!startX) return;
-
-    const x = e.touches[0].pageX - sliderRef.current.offsetLeft;
-    const walk = (x - startX) * 2;
-
-    sliderRef.current.scrollLeft = scrollLeft - walk;
   };
 
   return (
@@ -177,13 +250,19 @@ const MoreToShopCarousel = () => {
       <div
         ref={sliderRef}
         className='flex overflow-x-auto scrollbar-hide snap-x snap-mandatory gap-2 '
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
-        onMouseLeave={handleMouseUp}
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleMouseUp}
+        style={{
+          WebkitOverflowScrolling: "touch",
+          scrollbarWidth: "none",
+          msOverflowStyle: "none",
+          cursor: isDragging ? "grabbing" : "grab",
+          userSelect: "none",
+          transition: isDragging ? "none" : "all 0.5s ease",
+        }}
+        onMouseDown={handleDragStart}
+        onMouseMove={handleDragMove}
+        onTouchStart={handleDragStart}
+        onTouchMove={handleDragMove}
+        onTouchEnd={() => setIsDragging(false)}
       >
         {products.map((product) => (
           <div
@@ -194,14 +273,14 @@ const MoreToShopCarousel = () => {
               className='h-auto w-full object-cover rounded-sm'
               src='https://placehold.co/300x300'
               alt={product.name}
+              draggable='false'
             />
             <div className='mt-2  text-ellipsis whitespace-nowrap md:gap-5 flex-col text-left '>
               <h3 className='font-mono w-max text-lg font-bold  transition-opacity duration-200 ease-in-out '>
-                {" "}
-                Womens Lounger Lift
+                {product.name}
               </h3>
               <p className='font-inter text-md tex-gray-900 leading-relaxed'>
-                Stony Cream
+                {product.color}
               </p>
               <p className='font-inter text-md tex-gray-900'>
                 {" "}

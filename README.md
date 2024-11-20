@@ -411,23 +411,28 @@ Day #10 Complete Scrolling Functionality
 - Finally finished the Infinite Scroll Carousel,
 - This was very hard. Needed a lot of research and help
 - Took at least 4 days.
-- Understanding the logic  of the handleScroll
-  ```
-  
-  
+- Understanding the logic of the handleScroll
+
   ```
 
+
+  ```
 
 Day #11 Day off
 
 Day #12 Day off
 
-Day #13 
-- Trying to understand the logic behind the infinite scroll functionality. 
+Day #13
+
+- Trying to understand the logic behind the infinite scroll functionality.
 
 Day #14
+
 - Start on More to Shop Collections
-- Setting up Page Routes
-  
+- Coded design outline and basic scroll functionality.
 
+Day #15
 
+- Complete touch and mouse drag functionality
+- Fix icons appearing and being hidden
+- Start page routes
