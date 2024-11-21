@@ -443,5 +443,13 @@ Day #16
 
 Day #17
 
+
+- Bugs - left arrow still working even though it is hidden. I want to disable the function. I will leave it for tomorrow
 - Page Layout and Routes
--
+
+```
+Layout Components
+Page Components
+Footer Pages
+
+```

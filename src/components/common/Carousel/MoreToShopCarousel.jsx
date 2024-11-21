@@ -246,11 +246,11 @@ const MoreToShopCarousel = () => {
       </div>
 
       {/* Right arrow - hide on mobile and when at end */}
-      {showRightArrow && (
+      {showRightArrow ? (
         <button
           onClick={() => scroll("right")}
-          className='absolute hidden md:flex -right-1 top-1/2 -translate-y-1/2 z-10 rounded-full p-2 transition-all duration-200 ease-in-out opacity-0 data-[show=true]:opacity-100 '
-          data-show={showRightArrow}
+          className='absolute hidden md:flex -right-1 top-1/2 -translate-y-1/2 z-10 rounded-full p-2 transition-all duration-200 ease-in-out opacity-0 data-[show=true]:opacity-100  pointer-events-none data-[show=true]:pointer-events-auto'
+          data-show={true}
         >
           <svg
             xmlns='http://www.w3.org/2000/svg'
@@ -258,7 +258,7 @@ const MoreToShopCarousel = () => {
             viewBox='0 0 24 24'
             strokeWidth={1.7}
             stroke='currentColor'
-            className='size-10 bg-white border border-black  rounded-full p-2 hover:bg-primary hover:text-white hover:border-white transtion duration-300 ease-in-out  '
+            className='size-10 bg-white border border-black  rounded-full p-2 hover:bg-primary hover:text-white hover:border-white transtion duration-300 ease-in-out   '
           >
             <path
               strokeLinecap='round'
@@ -267,14 +267,14 @@ const MoreToShopCarousel = () => {
             />
           </svg>
         </button>
-      )}
+      ) : null}
 
       {/* Left Arrow - hide on mobile and when at start */}
-      {showLeftArrow && (
+      {showLeftArrow ? (
         <button
           onClick={() => scroll("left")}
-          className='absolute hidden md:flex -left-1 top-1/2 -translate-y-1/2 z-10 rounded-full p-2 transition-all duration-300 ease-in-out opacity-0 data-[show=true]:opacity-100'
-          data-show={showLeftArrow}
+          className='absolute hidden md:flex -left-1 top-1/2 -translate-y-1/2 z-10 rounded-full p-2 transition-all duration-300 ease-in-out opacity-0 data-[show=true]:opacity-100 pointer-events-none data-[show=true]:pointer-events-auto'
+          data-show={true}
         >
           <svg
             xmlns='http://www.w3.org/2000/svg'
@@ -291,7 +291,7 @@ const MoreToShopCarousel = () => {
             />
           </svg>
         </button>
-      )}
+      ) : null}
       <div
         ref={sliderRef}
         className='flex overflow-x-auto scrollbar-hide snap-x snap-mandatory gap-2 '
