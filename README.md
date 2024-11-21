@@ -435,4 +435,13 @@ Day #15
 
 - Complete touch and mouse drag functionality
 - Fix icons appearing and being hidden
-- Start page routes
+
+Day #16
+
+- Finally fixed touch mouse drag functionality
+- Fixed arrow left and right icons appearing conditionally based on start and end position
+
+Day #17
+
+- Page Layout and Routes
+-

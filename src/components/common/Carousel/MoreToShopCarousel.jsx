@@ -151,44 +151,34 @@ const MoreToShopCarousel = () => {
 
     // determine current x position horizontal position of the cursor or touch point
     const pageX = e.type.includes("mouse") ? e.clientX : e.touches[0].clientX;
-    // get the drag distance by subtracting pageX from startX // sensitivity factor of 0.8
-    // walk is basically the drag distance
-    const walk = (pageX - startX) * 0.8;
-    // update drag distance
-    setDragDistance(walk);
 
     // check if slider exists
     if (sliderRef.current) {
       // get the slider element and save to slider variable
       const slider = sliderRef.current;
-      // get current scroll left position
-      const currentScrollPosition = slider.scrollLeft;
 
-      // Only one scroll at a time (300px) at a time
-      // Add a small threshold to prevent accidental scrolls
-      if (Math.abs(walk) > 50) {
-        // calculate target position by adding walk to current scroll
-        // positive walk value means in a negative direction
-        // negative walk value means in a positive direction
-        const targetPosition = currentScrollPosition + (walk > 0 ? -300 : 300);
+      // keep a little scroll threshold
+      if (Math.abs(pageX - startX) > 50) {
+        const direction = pageX > startX ? -1 : 1; // - 1 for left and 1 for right
+        const targetPosition = scrollLeft + direction * 300;
 
         // calculate maximum we can scroll remaining
         // scrollWidth is total width of all content
         // clientWidth is the width of the viewport
-        const maxScroll = slider.scrollWidth - slider.offsetWidth;
-
-        // ensure we dont scroll beyond the maximum possible scroll
-        const boundedPosition = Math.max(0, Math.min(targetPosition));
+        const maxScroll = slider.scrollWidth - slider.offsetWidth; // total width of slider - width of viewport
+        const boundedPosition = Math.max(
+          0,
+          Math.min(targetPosition, maxScroll)
+        ); // Math.max takes two numbers and chooose the bigger of the two which is either 0 or targetPosition/maxScroll (the smaller one). This formula is saying first lets not scroll past the end (Math.min). Secondly lets not scroll past the beginning (Math.max).
 
         // scroll to the bounded position
         slider.scrollTo({
-          left: currentScrollPosition + targetPosition,
+          left: boundedPosition,
           behavior: "smooth",
         });
 
         // Reset the start position to prevent continuous scrolling
-        // setStartX(pageX);
-        // setScrollLeft(boundedPosition);
+        setIsDragging(false);
       }
     }
 
