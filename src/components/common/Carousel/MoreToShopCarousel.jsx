@@ -5,6 +5,8 @@ const MoreToShopCarousel = () => {
   const [scrollLeft, setScrollLeft] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const [dragDistance, setDragDistance] = useState(0);
+  const [showLeftArrow, setShowLeftArrow] = useState(false);
+  const [showRightArrow, setShowRightArrow] = useState(false);
   const sliderRef = useRef(null);
 
   // dummy data
@@ -109,6 +111,9 @@ const MoreToShopCarousel = () => {
             left: targetPosition,
             behavior: "smooth",
           });
+
+          // update arrow visibility
+          updateArrowVisibility();
         }
       }
     };
@@ -170,26 +175,64 @@ const MoreToShopCarousel = () => {
         // calculate maximum we can scroll remaining
         // scrollWidth is total width of all content
         // clientWidth is the width of the viewport
-        const maxScroll = slider.scrollWidth - slider.clientWidth;
+        const maxScroll = slider.scrollWidth - slider.offsetWidth;
 
         // ensure we dont scroll beyond the maximum possible scroll
-        const boundedPosition = Math.max(
-          0,
-          Math.min(targetPosition, maxScroll)
-        );
+        const boundedPosition = Math.max(0, Math.min(targetPosition));
 
         // scroll to the bounded position
         slider.scrollTo({
-          left: slider.scrollLeft + targetPosition,
+          left: currentScrollPosition + targetPosition,
           behavior: "smooth",
         });
 
         // Reset the start position to prevent continuous scrolling
-        setStartX(pageX);
-        setScrollLeft(boundedPosition);
+        // setStartX(pageX);
+        // setScrollLeft(boundedPosition);
       }
     }
+
+    updateArrowVisibility();
   };
+
+  // function to update arrow visibility
+  const updateArrowVisibility = () => {
+    // check if slider exists
+    if (!sliderRef.current) return;
+
+    // get the slider element
+    const slider = sliderRef.current;
+
+    // Get scroll position and dimensions
+    const scrollLeft = slider.scrollLeft; // the distance we scrolled from the left
+    const scrollWidth = slider.scrollWidth; // Total width of all content
+    const clientWidth = slider.clientWidth; // Visible width of the container
+
+    const isStart = scrollLeft <= 0; // check if we are at the start
+    const isEnd = scrollLeft >= scrollWidth - clientWidth - 1; // check if we are at the end
+
+    setShowLeftArrow(!isStart); // show left arrow if start is false (not at start)
+    setShowRightArrow(!isEnd); // show right arrow if end is false (not at end)
+  };
+
+  useEffect(() => {
+    // Get reference to the slider element
+    const slider = sliderRef.current;
+    if (!slider) return;
+
+    // Initial check for arrow visibility
+    updateArrowVisibility();
+
+    // Add event listeners
+    slider.addEventListener("scroll", updateArrowVisibility);
+    window.addEventListener("resize", updateArrowVisibility);
+
+    // Clean up function
+    return () => {
+      slider.removeEventListener("scroll", updateArrowVisibility);
+      window.removeEventListener("resize", updateArrowVisibility);
+    };
+  }, []);
 
   // scroll function (left and right arrows)
   const scroll = (direction) => {
@@ -201,6 +244,9 @@ const MoreToShopCarousel = () => {
       left: container.scrollLeft + scrollAmount,
       behavior: "smooth",
     });
+
+    // Update arrow visibility
+    updateArrowVisibility();
   };
 
   return (
@@ -208,45 +254,54 @@ const MoreToShopCarousel = () => {
       <div className='uppercase max-screen-full font-bold mb-4 flex text-left text-lg font-inter'>
         More to Shop
       </div>
-      {/* Navigation Buttons */}
-      <button
-        onClick={() => scroll("right")}
-        className='absolute md:flex -right-1 top-1/2 -translate-y-1/2 z-10 rounded-full p-2 '
-      >
-        <svg
-          xmlns='http://www.w3.org/2000/svg'
-          fill='none'
-          viewBox='0 0 24 24'
-          strokeWidth={1.7}
-          stroke='currentColor'
-          className='size-10 bg-white border border-black  rounded-full p-2 hover:bg-primary hover:text-white hover:border-white transtion duration-300 ease-in-out  '
+
+      {/* Right arrow - hide on mobile and when at end */}
+      {showRightArrow && (
+        <button
+          onClick={() => scroll("right")}
+          className='absolute hidden md:flex -right-1 top-1/2 -translate-y-1/2 z-10 rounded-full p-2 transition-all duration-200 ease-in-out opacity-0 data-[show=true]:opacity-100 '
+          data-show={showRightArrow}
         >
-          <path
-            strokeLinecap='round'
-            strokeLinejoin='round'
-            d='m8.25 4.5 7.5 7.5-7.5 7.5'
-          />
-        </svg>
-      </button>
-      <button
-        onClick={() => scroll("left")}
-        className='absolute md:flex -left-1 top-1/2 -translate-y-1/2 z-10 rounded-full p-2'
-      >
-        <svg
-          xmlns='http://www.w3.org/2000/svg'
-          fill='none'
-          viewBox='0 0 24 24'
-          strokeWidth={1.5}
-          stroke='currentColor'
-          className='size-10 bg-white border border-black rounded-full p-2 hover:bg-primary hover:text-white hover:border-white transtion duration-300 ease-in-out'
+          <svg
+            xmlns='http://www.w3.org/2000/svg'
+            fill='none'
+            viewBox='0 0 24 24'
+            strokeWidth={1.7}
+            stroke='currentColor'
+            className='size-10 bg-white border border-black  rounded-full p-2 hover:bg-primary hover:text-white hover:border-white transtion duration-300 ease-in-out  '
+          >
+            <path
+              strokeLinecap='round'
+              strokeLinejoin='round'
+              d='m8.25 4.5 7.5 7.5-7.5 7.5'
+            />
+          </svg>
+        </button>
+      )}
+
+      {/* Left Arrow - hide on mobile and when at start */}
+      {showLeftArrow && (
+        <button
+          onClick={() => scroll("left")}
+          className='absolute hidden md:flex -left-1 top-1/2 -translate-y-1/2 z-10 rounded-full p-2 transition-all duration-300 ease-in-out opacity-0 data-[show=true]:opacity-100'
+          data-show={showLeftArrow}
         >
-          <path
-            strokeLinecap='round'
-            strokeLinejoin='round'
-            d='M15.75 19.5 8.25 12l7.5-7.5'
-          />
-        </svg>
-      </button>
+          <svg
+            xmlns='http://www.w3.org/2000/svg'
+            fill='none'
+            viewBox='0 0 24 24'
+            strokeWidth={1.5}
+            stroke='currentColor'
+            className='size-10 bg-white border border-black rounded-full p-2 hover:bg-primary hover:text-white hover:border-white transtion duration-300 ease-in-out'
+          >
+            <path
+              strokeLinecap='round'
+              strokeLinejoin='round'
+              d='M15.75 19.5 8.25 12l7.5-7.5'
+            />
+          </svg>
+        </button>
+      )}
       <div
         ref={sliderRef}
         className='flex overflow-x-auto scrollbar-hide snap-x snap-mandatory gap-2 '
