@@ -1,6 +1,6 @@
 import { Menu, Search } from "lucide-react";
-import Logo from "./components/Logo";
-import IconNav from "./components/IconNav";
+import Logo from "./Logo";
+import IconNav from "./IconNav";
 
 function MobileHeader() {
   return (
@@ -9,7 +9,7 @@ function MobileHeader() {
         <Menu size={26} />
       </button>
       <div className=' absolute  left-1/2 transform -translate-x-1/2 '>
-        <Logo  />
+        <Logo />
       </div>
 
       {/* Icon Nav variant minial shows the opposite of variant full */}

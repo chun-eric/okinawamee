@@ -1,4 +1,3 @@
-import Logo from "../Header/components/Logo";
 import valueBannerImage from "../../../assets/images/ValueBanner/valueBannerImage.svg";
 const ValueBanner = () => {
   return (

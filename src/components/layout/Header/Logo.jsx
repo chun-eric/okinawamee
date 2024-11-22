@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import logo from "../../../../assets/icons/okinawamee_logo.svg";
+import logo from "/src/assets/icons/okinawamee_logo.svg";
 
 function Logo() {
   return (

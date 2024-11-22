@@ -7,7 +7,6 @@ const MainLayout = () => {
     <div className='flex min-h-screen flex-col'>
       <Header />
       <main className='flex-grow'>
-        {/* All child routes are rendere in the Outlet */}
         <Outlet />
       </main>
       <Footer />

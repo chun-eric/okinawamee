@@ -1,5 +1,6 @@
 import { Search, User, ShoppingCart, HelpCircle } from "lucide-react";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
 function IconNav({ variant = "full" }) {
   return (
@@ -25,3 +26,7 @@ function IconNav({ variant = "full" }) {
 }
 
 export default IconNav;
+
+IconNav.propTypes = {
+  variant: PropTypes.string,
+};

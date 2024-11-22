@@ -1,6 +1,6 @@
-import IconNav from "./components/IconNav";
-import Logo from "./components/Logo";
-import MainNav from "./components/MainNav";
+import IconNav from "./IconNav";
+import Logo from "./Logo";
+import MainNav from "./MainNav";
 import MobileHeader from "./MobileHeader";
 
 function Header() {

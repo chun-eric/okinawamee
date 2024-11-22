@@ -1,4 +1,4 @@
-export const Subscribe = () => {
+const Subscribe = () => {
   return (
     <div className='bg-[#f5f5f5] w-full px-6 py-16 '>
       <div className='w-full mx-auto flex flex-col gap-6 items-center text-center'>
@@ -35,3 +35,5 @@ export const Subscribe = () => {
     </div>
   );
 };
+
+export default Subscribe;
