@@ -456,3 +456,14 @@ Footer Pages
 Day #18
 
 - Finalized and configured routes in react router dom. This took a while. A lot of mistakes on importing file paths, and changing routerConfig.js to jsx. Most of the hassle came from import mistakes and restructuring.
+
+Day #19
+- Create Side Menu
+- 
+Day #20
+
+- Start on creating mens collection page
+- Start on creating womens collection page
+- Start on creating kids collection page
+- Start on sales collection page
+-
