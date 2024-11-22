@@ -443,7 +443,6 @@ Day #16
 
 Day #17
 
-
 - Bugs - left arrow still working even though it is hidden. I want to disable the function. I will leave it for tomorrow
 - Page Layout and Routes
 
@@ -453,3 +452,7 @@ Page Components
 Footer Pages
 
 ```
+
+Day #18
+
+- Finalized and configured routes in react router dom. This took a while. A lot of mistakes on importing file paths, and changing routerConfig.js to jsx. Most of the hassle came from import mistakes and restructuring.

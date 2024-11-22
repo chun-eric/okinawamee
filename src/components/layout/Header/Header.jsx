@@ -2,6 +2,7 @@ import IconNav from "./IconNav";
 import Logo from "./Logo";
 import MainNav from "./MainNav";
 import MobileHeader from "./MobileHeader";
+import { Link } from "react-router-dom";
 
 function Header() {
   return (
@@ -20,9 +21,9 @@ function Header() {
         <div className=' px-8 py-10 flex justify-between items-center  border-b shadow-md'>
           <MainNav />
 
-          <div className='absolute left-1/2 transform -translate-x-1/2'>
+          <Link to='/' className='absolute left-1/2 transform -translate-x-1/2'>
             <Logo />
-          </div>
+          </Link>
 
           <IconNav variant='full' />
         </div>

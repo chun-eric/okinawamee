@@ -10,7 +10,7 @@ function IconNav({ variant = "full" }) {
           <Link to='/search' className='hover:text-gray-700'>
             <Search size={24} />
           </Link>
-          <Link to='/account' className='hover:text-gray-700'>
+          <Link to='/account/login' className='hover:text-gray-700'>
             <User size={24} />
           </Link>
           <Link to='/help' className='hover:text-gray-700'>
@@ -18,7 +18,7 @@ function IconNav({ variant = "full" }) {
           </Link>
         </>
       )}
-      <Link size={20} className='hover:text-gray-600'>
+      <Link to='/cart' size={20} className='hover:text-gray-600'>
         <ShoppingCart />
       </Link>
     </div>

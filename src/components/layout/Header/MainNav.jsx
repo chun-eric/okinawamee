@@ -4,11 +4,11 @@ import { Link } from "react-router-dom";
 function MainNav() {
   // Adding path and link to each nav item using an array
   const navItems = [
-    { path: "/men", label: "Men" },
-    { path: "/women", label: "Women" },
-    { path: "/kids", label: "Kids" },
+    { path: "/collections/mens", label: "Men" },
+    { path: "/collections/womens", label: "Women" },
+    { path: "/collections/kids", label: "Kids" },
     {
-      path: "/sale",
+      path: "/collections/sale",
       label: "Sale",
       className: "text-orange-600 hover:text-orange-800",
     },

@@ -53,6 +53,7 @@ export const routerConfig = [
           { index: true, element: <Account /> },
           { path: "orders", element: <Orders /> },
           { path: "settings", element: <Settings /> },
+          { path: "login", element: <Login /> },
         ],
       },
       { path: "cart", element: <Cart /> },
@@ -71,7 +72,7 @@ export const routerConfig = [
       { path: "faqs", element: <Faqs /> },
 
       // Error Not Found
-      { path: "404", element: <NotFound /> },
+      { path: "*", element: <NotFound /> },
     ],
   },
 ];

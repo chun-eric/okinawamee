@@ -31,9 +31,9 @@ const Footer = () => {
           {/* Contact and SM Icons */}
           <div className='flex flex-col items-center space-y-3 lg:items-start'>
             <h4>Contact</h4>
-            <p>Kokusai Dori, Naha, Okinawa</p>
-            <p>(+81) 635 253 163</p>
-            <p>mauishirts@okinawamee.com</p>
+            <p className='font-inter'>Kokusai Dori, Naha, Okinawa</p>
+            <p className='font-inter'>(+81) 635 253 163</p>
+            <p className='font-inter'>okinawameeshirts@okinawamee.com</p>
 
             <div className='py-4 flex flex-col gap-0 '>
               <h4>Follow us</h4>
@@ -73,27 +73,27 @@ const Footer = () => {
           </div>
 
           {/* Company Column */}
-          <div className='space-y-3  px-3'>
+          <div className='space-y-3  px-3 '>
             <h4 className='lg:mb-8'>Company</h4>
-            <p>About us</p>
-            <p>Privacy Policy</p>
-            <p>Terms and Conditions</p>
-            <p>Delivery Information</p>
+            <p className='font-inter'>About us</p>
+            <p className='font-inter'>Privacy Policy</p>
+            <p className='font-inter'>Terms and Conditions</p>
+            <p className='font-inter'>Delivery Information</p>
           </div>
 
           {/* My Account Column */}
           <div className='space-y-3  px-3 '>
             <h4 className='lg:mb-8'>My Account</h4>
-            <p>Sign In</p>
-            <p>View Cart</p>
-            <p>My Wishlist</p>
-            <p>Help</p>
+            <p className='font-inter'>Sign In</p>
+            <p className='font-inter'>View Cart</p>
+            <p className='font-inter'>My Wishlist</p>
+            <p className='font-inter'>Help</p>
           </div>
 
           {/* Donwload App Column */}
           <div className='space-y-3  px-3'>
             <h4 className='lg:mb-6'>Download Our App</h4>
-            <p className='pt-2'>From the App store or Google Play</p>
+            <p className='pt-2 font-inter'>From the App store or Google Play</p>
             <div className='flex justify-center items-center gap-2 lg:justify-start'>
               <img
                 className='w-[60px] h-[auto]'
@@ -102,7 +102,7 @@ const Footer = () => {
               />
               <img src={googleplay} alt='googleplay logo' />
             </div>
-            <p className='pt-2'>Secure Payments</p>
+            <p className='pt-2 font-inter'>Secure Payments</p>
             <div className='flex justify-center items-center lg:justify-start gap-2 '>
               <img src={visa} alt='visa logo' />
               <img src={mastercard} alt='mastercard logo' />
@@ -114,7 +114,7 @@ const Footer = () => {
 
         {/* Copyright */}
         <div className='mx-auto mt-10'>
-          <p className='footer-p'>&#169; 2024 MauiMee</p>
+          <p className='footer-p font-inter'>&#169; 2024 OkinawaMee</p>
         </div>
       </div>
     </footer>
