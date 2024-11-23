@@ -459,7 +459,7 @@ Day #18
 
 Day #19
 - Create Side Menu
-- 
+
 Day #20
 
 - Start on creating mens collection page

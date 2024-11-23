@@ -18,7 +18,7 @@ import Help from "../pages/footer/Help";
 import Contact from "../pages/footer/Contact";
 import Privacy from "../pages/footer/Privacy";
 import Terms from "../pages/footer/Terms";
-import NotFound from "../pages/Notfound";
+import NotFound from "../pages/NotFound";
 import Delivery from "../pages/footer/Delivery";
 import Returns from "../pages/footer/Returns";
 import Faqs from "../pages/footer/Faqs";
