@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 const ProductCarousel = ({ items }) => {
   const [isDragging, setIsDragging] = useState(false); // to check if the slider is being dragged
@@ -174,7 +175,7 @@ const ProductCarousel = ({ items }) => {
                   </p>
                 </div>
                 <div className='flex flex-col justify-center items-center gap-2 mb-4 xl:flex-row  font-inter'>
-                  <button className='rounded flex-1 w-[180px] h-[48px] max-w-[180px] max-h-[48px] font-bold inline-block bg-white transition-colors hover:bg-primary hover:text-white px-8 py-3 text-sm'>
+                  <button className='rounded flex-1 w-[180px] h-[48px] max-w-[180px] max-h-[48px] font-bold inline-block bg-white transition-colors hover:bg-primary hover:text-white px-8 py-3 text-sm '>
                     SHOP NOW
                   </button>
                   <button className='rounded flex-1 w-[180px] h-[48px] max-w-[180px] max-h-[48px] font-bold  inline-block bg-white transition-colors hover:bg-primary hover:text-white px-8 py-3 text-sm'>
@@ -240,7 +241,7 @@ const ProductCarousel = ({ items }) => {
                 {/* Contents Overlay */}
                 <div className='absolute inset-0 flex flex-col justify-between p-5 sm:p-8 md:p-12'>
                   <div className='text-white'>
-                    <h2 className='text-lg  md:text-3xl  font-bold'>
+                    <h2 className='text-2xl  md:text-3xl  font-bold'>
                       {item?.title}
                     </h2>
                     <p className='mt-2 text-xs sm:text-base'>
@@ -248,12 +249,18 @@ const ProductCarousel = ({ items }) => {
                     </p>
                   </div>
                   <div className='flex justify-center  gap-2 mb-4 xl:flex-row  font-inter '>
-                    <button className='whitespace-nowrap rounded flex-1 w-auto font-bold inline-block bg-white transition-colors hover:bg-primary hover:text-white px-3 sm:px-5 md:px-8 py-3 text-[0.6rem] sm:text-base'>
+                    <Link
+                      to='/products/id'
+                      className='whitespace-nowrap rounded flex-1 w-auto font-bold inline-block bg-white transition-colors hover:bg-primary hover:text-white px-3 sm:px-5 md:px-8 py-3 text-[0.6rem] sm:text-base text-center'
+                    >
                       SHOP NOW
-                    </button>
-                    <button className='whitespace-nowrap rounded  flex-1 sm:w-auto  font-bold inline-block bg-white transition-colors hover:bg-primary hover:text-white  px-3 sm:px-5 md:px-8 py-3 text-[0.6rem] sm:text-base'>
+                    </Link>
+                    <Link
+                      to='/collections/mens'
+                      className='whitespace-nowrap rounded  flex-1 sm:w-auto  font-bold inline-block bg-white transition-colors hover:bg-primary hover:text-white  px-3 sm:px-5 md:px-8 py-3 text-[0.6rem] sm:text-base text-center'
+                    >
                       COLLECTION
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>

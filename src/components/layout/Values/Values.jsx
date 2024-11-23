@@ -20,11 +20,11 @@ const Values = () => {
 
   return (
     <div className='max-w-7xl mx-auto px-6 py-16 bg-[#ffffff] '>
-      <h2 className='text-left font-mono font-bold md:text-4xl mb-5 '>
+      <h2 className='text-left font-mono font-bold md:text-4xl mb-8 '>
         The MauiMee Way
       </h2>
 
-      <div className='grid grid-cols-1 gap-8 md:grid-cols-3 text-left'>
+      <div className='grid grid-cols-1 gap-12 md:grid-cols-3 text-left'>
         {values.map((value, index) => (
           <div key={index} className=''>
             <h3 className=' font-bold font-mono text-lg mb-2'>{value.title}</h3>
