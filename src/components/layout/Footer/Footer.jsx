@@ -114,7 +114,9 @@ const Footer = () => {
 
         {/* Copyright */}
         <div className='mx-auto mt-10'>
-          <p className='footer-p font-inter'>&#169; 2024 OkinawaMee</p>
+          <p className='footer-p font-inter text-center lg:text-left '>
+            &#169; 2024 OkinawaMee
+          </p>
         </div>
       </div>
     </footer>
