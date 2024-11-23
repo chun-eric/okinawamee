@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const HeroBanner = () => {
   const [currentPhoto, setCurrentPhoto] = useState(0);
@@ -67,8 +68,10 @@ const HeroBanner = () => {
                 </p>
               </div>
               {/* Mobile Content Overlay */}
-              <div className=' md:hidden flex-col items-center p-14'>
-                <h2 className='text-4xl font-medium mb-4'>{photo.title}</h2>
+              <div className=' md:hidden flex-col items-center p-14 '>
+                <h2 className='text-4xl font-bold text-center mb-4'>
+                  {photo.title}
+                </h2>
                 <p className='text-lg mt-7 mx-auto text-center max-w-md'>
                   {photo.description}
                 </p>
@@ -95,13 +98,19 @@ const HeroBanner = () => {
       </div>
 
       {/* Hero Banner Buttons */}
-      <div className='absolute bottom-36 right-14 flex gap-3'>
-        <button className='bg-white font-bold px-8 py-3 rounded hover:bg-primary transition-colors hover:text-white'>
+      <div className='absolute flex md:bottom-36 md:right-14 bottom-20 right-8 w-[calc(100%-4rem)] md:w-auto gap-3'>
+        <Link
+          to='/collections/mens'
+          className='bg-white text-center font-poppins flex-1 md:flex-initial font-bold px-8 py-3 rounded hover:bg-primary transition-colors hover:text-white'
+        >
           SHOP MEN
-        </button>
-        <button className='bg-white font-bold px-8 py-3 rounded hover:bg-primary transition-colors hover:text-white'>
+        </Link>
+        <Link
+          to='/collections/womens'
+          className='bg-white text-center font-poppins flex-1 md:flex-initial font-bold px-8 py-3 rounded hover:bg-primary transition-colors hover:text-white'
+        >
           SHOP WOMEN
-        </button>
+        </Link>
       </div>
     </div>
   );
