@@ -1,8 +1,8 @@
 import CollectionPage from "../../../pages/collections/CollectionPage";
 
 
-const WomensCollection = () => {
-  const womensCollectionData = {
+const SaleCollection = () => {
+  const salesCollectionData = {
     title: "Mens Collection",
     description: "Our premium Shirt collection for women",
     products: [],
@@ -15,7 +15,7 @@ const WomensCollection = () => {
     recentlyViewed: [],
     recomendations: [],
   };
-  return <CollectionPage collectionData={womensCollectionData} />;
+  return <CollectionPage collectionData={salesCollectionData} />;
 };
 
-export default WomensCollection;
+export default SaleCollection;

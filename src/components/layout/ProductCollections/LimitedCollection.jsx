@@ -1,5 +1,3 @@
-
-
 const LimitedCollection = () => {
   return <div>LimitedCollection</div>;
 };
