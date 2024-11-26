@@ -14,7 +14,7 @@ const MensCollection = () => {
         image: "https://placehold.co/315x315", // placeholder image
         description: "A classic blue Hawaiian shirt, perfect for any occasion.",
         colors: ["blue", "white", "red"],
-        sizes: ["S", "M", "L", "XL"],
+        sizes: ["XS", "S", "M", "L", "XL"],
         category: "shirts",
         collection: "casual",
         slug: "classic-shirt",
@@ -27,7 +27,7 @@ const MensCollection = () => {
         image: "https://placehold.co/315x315", // placeholder image
         description: "A classic blue Hawaiian shirt, perfect for any occasion.",
         colors: ["blue", "white", "red"],
-        sizes: ["S", "M", "L", "XL"],
+        sizes: ["XS", "S", "M", "L", "XL"],
         category: "shirts",
         collection: "casual",
         slug: "classic-teal-shirt",
@@ -40,7 +40,7 @@ const MensCollection = () => {
         image: "https://placehold.co/315x315", // placeholder image
         description: "A classic blue Hawaiian shirt, perfect for any occasion.",
         colors: ["blue", "white", "red"],
-        sizes: ["S", "M", "L", "XL"],
+        sizes: ["XS", "S", "M", "L", "XL"],
         category: "shirts",
         collection: "casual",
         slug: "classic-white-shirt",
@@ -53,7 +53,7 @@ const MensCollection = () => {
         image: "https://placehold.co/315x315", // placeholder image
         description: "A classic blue Hawaiian shirt, perfect for any occasion.",
         colors: ["blue", "white", "red"],
-        sizes: ["S", "M", "L", "XL"],
+        sizes: ["XS", "S", "M", "L", "XL"],
         category: "shirts",
         collection: "casual",
         slug: "classic-blue-shirt",
@@ -66,7 +66,7 @@ const MensCollection = () => {
         image: "https://placehold.co/315x315", // placeholder image
         description: "A classic blue Hawaiian shirt, perfect for any occasion.",
         colors: ["blue", "white", "red"],
-        sizes: ["S", "M", "L", "XL"],
+        sizes: ["XS", "S", "M", "L", "XL"],
         category: "shirts",
         collection: "casual",
         slug: "classic-orange-shirt",
@@ -79,7 +79,7 @@ const MensCollection = () => {
         image: "https://placehold.co/315x315", // placeholder image
         description: "A classic blue Hawaiian shirt, perfect for any occasion.",
         colors: ["blue", "white", "red"],
-        sizes: ["S", "M", "L", "XL"],
+        sizes: ["XS", "S", "M", "L", "XL"],
         category: "shirts",
         collection: "casual",
         slug: "classic-red-shirt",

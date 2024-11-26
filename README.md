@@ -468,6 +468,6 @@ Day #20
 - Start on sales collection page
 
 Day #21 and 22
-- Buid the basic design of the product Grid and product details page.
+- Buid the basic design of the product Grid and each product card and card hover state. This was much harder than i thought. 
 - 
 
