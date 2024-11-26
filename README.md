@@ -469,5 +469,6 @@ Day #20
 
 Day #21 and 22
 - Buid the basic design of the product Grid and each product card and card hover state. This was much harder than i thought. 
+- *Bug* when on hover state the z-index gets all wonky when i hover on other cards.
 - 
 
