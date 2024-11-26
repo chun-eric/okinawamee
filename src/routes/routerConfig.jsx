@@ -44,7 +44,7 @@ export const routerConfig = [
         ],
       },
       {
-        path: "product/:productId",
+        path: "product/:slug",
         element: <ProductDetails />,
       },
       {

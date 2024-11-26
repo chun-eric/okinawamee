@@ -466,4 +466,8 @@ Day #20
 - Start on creating womens collection page
 - Start on creating kids collection page
 - Start on sales collection page
--
+
+Day #21 and 22
+- Buid the basic design of the product Grid and product details page.
+- 
+
