@@ -25,8 +25,11 @@ const ProductCard = ({ product }) => {
 
   return (
     <div
-      className={`relative w-[315px] "
+      className={`relative w-[315px]  "
       }`}
+      style={{
+        zIndex: isHovered ? 50 : 1,
+      }}
     >
       {/* Hover Overlay */}
       {isHovered && (
@@ -35,11 +38,12 @@ const ProductCard = ({ product }) => {
       {/* Main card container */}
       <div
         className='relative bg-white'
+        style={{ zIndex: isHovered ? 101 : 1 }}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
         {/* Product Card Content */}
-        <div className={` relative z-15 bg-white `}>
+        <div className={` relative z-102 bg-white `}>
           <Link to={`/products/${slug}`} className='block'>
             <div className='bg-white max-w-[315px] h-auto mb-3 overflow-hidden '>
               <div className='relative aspect-square'>
@@ -71,7 +75,7 @@ const ProductCard = ({ product }) => {
           </Link>
           {/* Quick add button - show on Hover */}
           {isHovered && (
-            <div className='absolute left-0 right-0 top-full bg-white z-20 px-6 py-1 pt-3 pb-6 mt-[0.5px] -m-8 border-l border-r border-b border-t-0  border-gray-300 shadow-2xl rounded-sm'>
+            <div className='absolute left-0 right-0 top-full bg-white z-[103] px-6 py-1 pt-3 pb-6 mt-[0.5px] -m-8 border-l border-r border-b border-t-0  border-gray-300 shadow-2xl rounded-sm'>
               <div className='text-sm font-medium mb-2'>Quick Add</div>
               <div className='grid grid-cols-6 gap-1 mb-2'>
                 {sizes.map((size) => (

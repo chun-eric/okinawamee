@@ -472,3 +472,6 @@ Day #21 and 22
 - *Bug* when on hover state the z-index gets all wonky when i hover on other cards.
 - 
 
+
+
+Day #23 
