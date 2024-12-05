@@ -458,6 +458,7 @@ Day #18
 - Finalized and configured routes in react router dom. This took a while. A lot of mistakes on importing file paths, and changing routerConfig.js to jsx. Most of the hassle came from import mistakes and restructuring.
 
 Day #19
+
 - Create Side Menu
 
 Day #20
@@ -468,10 +469,14 @@ Day #20
 - Start on sales collection page
 
 Day #21 and 22
-- Buid the basic design of the product Grid and each product card and card hover state. This was much harder than i thought. 
-- *Bug* when on hover state the z-index gets all wonky when i hover on other cards.
-- 
 
+- Buid the basic design of the product Grid and each product card and card hover state. This was much harder than i thought.
+- _Bug_ when on hover state the z-index gets all wonky when i hover on other cards.
+-
 
+Day #23
 
-Day #23 
+- _Bug_ when on hover state the z-index gets all wonky when i hover on other cards.
+- Bug fixed. Needed to add isolate property on the main div for stacking context and z-index from descending to ascending order on all the divs with the hover div having the highest z-index. That worked.
+- Generating the data for the products.js
+-

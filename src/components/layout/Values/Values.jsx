@@ -4,12 +4,12 @@ const Values = () => {
     {
       title: "Island-Ready Comfort",
       description:
-        "Breathable, flowing, and naturally relaxed, MauiMee shirts bring paradise to your everyday wardrobe. Button up, roll the sleeves, or leave it loose – our shirts move with you from beach to bistro.",
+        "Breathable, flowing, and naturally relaxed, OkinawamMee shirts bring paradise to your everyday wardrobe. Button up, roll the sleeves, or leave it loose – our shirts move with you from beach to bistro.",
     },
     {
       title: "Heritage in Every Pattern",
       description:
-        "From traditional motifs to modern designs, each print tells a story of Hawaiian culture. We collaborate with local artists and respect traditional patterns, ensuring every shirt carries authentic island spirit.",
+        "From traditional motifs to modern designs, each print tells a story of Okinawa culture. We collaborate with local artists and respect traditional patterns, ensuring every shirt carries authentic island spirit.",
     },
     {
       title: "Fabrics That Feel Like Paradise",
@@ -21,7 +21,7 @@ const Values = () => {
   return (
     <div className='max-w-7xl mx-auto px-6 py-16 bg-[#ffffff] '>
       <h2 className='text-left font-mono font-bold md:text-4xl mb-8 '>
-        The MauiMee Way
+        The OkinawaMee Way
       </h2>
 
       <div className='grid grid-cols-1 gap-12 md:grid-cols-3 text-left'>

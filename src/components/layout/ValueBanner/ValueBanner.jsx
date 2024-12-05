@@ -2,7 +2,7 @@ import valueBannerImage from "../../../assets/images/ValueBanner/valueBannerImag
 const ValueBanner = () => {
   return (
     <div className='relative w-full flex flex-col items-center justify-start p-8 md:p-12 my-8 mx-auto'>
-      <div className='w-full md:p-10 md:p-16 '>
+      <div className='w-full md:p-16 '>
         <div className='max-w-4xl mx-auto text-center space-y-6 '>
           <h2 className='font-bold text-3xl md:text-4xl z-50 text-black'>
             WEAVING TRADITION WITH TOMORROW
