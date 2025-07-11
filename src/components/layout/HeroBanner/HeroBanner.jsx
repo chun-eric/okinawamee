@@ -85,10 +85,16 @@ const HeroBanner = () => {
             <div className='absolute inset-0 flex flex-col'>
               {/* Desktop Content Overlay */}
               <div className='flex-col items-start hidden p-12 pt-20 md:flex'>
-                <h2 className='mb-4 font-mono font-bold text-white text-7xl outline-black'>
+                <h2
+                  className='mb-4 font-mono font-bold text-white text-7xl outline-black'
+                  style={{
+                    WebkitTextStroke: '0.5px rgba(0,0,0,0.2)',
+                    textShadow: '1px 1px 2px rgba(0,0,0,0.15)'
+                  }}
+                >
                   {photo.title}
                 </h2>
-                <p className='max-w-md text-lg text-left text-white'>
+                <p className='max-w-md text-2xl text-left text-white'>
                   {photo.description}
                 </p>
               </div>
