@@ -1,36 +1,61 @@
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import banner1 from '../../../assets/hero_assets/hero-1.webp'
+import banner2 from '../../../assets/hero_assets/hero-2.webp'
+import banner3 from '../../../assets/hero_assets/hero-3.webp'
+import banner4 from '../../../assets/hero_assets/hero-4.webp'
+import banner5 from '../../../assets/hero_assets/hero-5b.webp'
 
 const HeroBanner = () => {
-  const [currentPhoto, setCurrentPhoto] = useState(0);
+  const [currentPhoto, setCurrentPhoto] = useState(1)
 
   // dummy data for the image slider
   const photos = [
     {
-      id: 0,
-      title: "HAWAIIAN ORANGE MODE",
-      description: "NEW NEUTRAL SHADES SO SUBTLE THEY CAN'T HELP BUT STAND OUT",
-      Image: "https://placehold.co/1920x1080",
-      mobileImage: "https://placehold.co/768x1024",
+      id: 1,
+      title: 'OKINAWA COMFORT ',
+      description: 'AUTHENTIC KARIYUSHI SHIRTS CRAFTED WITH THE ISLAND SPIRIT',
+      Image: banner1,
+      mobileImage: banner1
     },
     {
-      id: 1,
-      title: "HAWAIIAN COMFORT MODE",
-      description:
-        "OUR ICONIC EVERYDAY SNEAKS ARE A SOFT, PILLOWY RETREAT FOR YOUR FEET",
-      Image: "https://placehold.co/1920x1080",
-      mobileImage: "https://placehold.co/768x1024",
+      id: 2,
+      title: 'OKINAWA COMFORT',
+      description: 'AUTHENTIC KARIYUSHI SHIRTS CRAFTED WITH THE ISLAND SPIRIT',
+      Image: banner2,
+      mobileImage: banner2
     },
-  ];
+    {
+      id: 3,
+      title: 'OKINAWA SPIRIT',
+      description: 'AUTHENTIC KARIYUSHI SHIRTS CRAFTED WITH THE ISLAND SPIRIT',
+      Image: banner3,
+      mobileImage: banner3
+    },
+    {
+      id: 4,
+      title: 'OKINAWA SPIRIT',
+      description: 'AUTHENTIC KARIYUSHI SHIRTS CRAFTED WITH THE ISLAND SPIRIT',
+      Image: banner4,
+      mobileImage: banner4
+    },
+    {
+      id: 5,
+      title: 'OKINAWA SPIRIT',
+      description: 'AUTHENTIC KARIYUSHI SHIRTS CRAFTED WITH THE ISLAND SPIRIT',
+      Image: banner5,
+      mobileImage: banner5
+    }
+  ]
 
   // Auto slide timer
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentPhoto((prev) => (prev + 1) % photos.length);
-    }, 5000);
+      setCurrentPhoto(prev => (prev + 1) % photos.length)
+    }, 7000)
 
-    return () => clearInterval(interval);
-  });
+    return () => clearInterval(interval)
+  }, [photos.length])
 
   return (
     <div className='relative w-full h-screen'>
@@ -39,40 +64,40 @@ const HeroBanner = () => {
         {photos.map((photo, index) => (
           <div
             key={photo.id}
-            className={`absolute w-full h-full transition-opacity duration-500 ease-in-out ${
-              currentPhoto === index ? "opactiy-100" : "opacity-0"
+            className={`absolute w-full h-full transition-opacity duration-700 ease-in-out ${
+              currentPhoto === index ? 'opacity-100' : 'opacity-0'
             }`}
           >
             {/* desktop images */}
             <img
               src={photo.Image}
               alt={photo.title}
-              className='hidden md:block object-cover w-full h-full'
+              className='hidden object-cover w-full h-full md:block'
             />
             {/* mobile images */}
             <img
               src={photo.mobileImage}
               alt={photo.title}
-              className='block md:hidden object-cover w-full h-full'
+              className='block object-cover w-full h-full md:hidden'
             />
 
             {/* Content Overlay */}
             <div className='absolute inset-0 flex flex-col'>
               {/* Desktop Content Overlay */}
-              <div className='hidden md:flex flex-col items-end p-12 pt-20'>
-                <h2 className='text-5xl font-mono font-bold mb-4'>
+              <div className='flex-col items-start hidden p-12 pt-20 md:flex'>
+                <h2 className='mb-4 font-mono font-bold text-white text-7xl outline-black'>
                   {photo.title}
                 </h2>
-                <p className='text-lg text-right max-w-md'>
+                <p className='max-w-md text-lg text-left text-white'>
                   {photo.description}
                 </p>
               </div>
               {/* Mobile Content Overlay */}
-              <div className=' md:hidden flex-col items-center p-14 '>
-                <h2 className='text-4xl font-bold text-center mb-4'>
+              <div className='flex-col items-center md:hidden p-14'>
+                <h2 className='mb-4 text-4xl font-bold text-center text-white'>
                   {photo.title}
                 </h2>
-                <p className='text-lg mt-7 mx-auto text-center max-w-md'>
+                <p className='max-w-md mx-auto text-lg text-center text-white mt-7'>
                   {photo.description}
                 </p>
               </div>
@@ -82,38 +107,38 @@ const HeroBanner = () => {
       </div>
 
       {/* Hero Banner Dots */}
-      <div className='absolute right-8 top-1/2 transform -translate-y-1/2 flex flex-col gap-2'>
+      <div className='absolute flex flex-col gap-2 transform -translate-y-1/2 right-8 top-1/2'>
         {photos.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentPhoto(index)}
             className={`w-2 h-2 rounded-full transition-all
               ${
-                currentPhoto === index ? "bg-primary scale-150" : "bg-gray-400"
+                currentPhoto === index ? 'bg-primary scale-150' : 'bg-gray-400'
               }`}
           >
-            {" "}
+            {' '}
           </button>
         ))}
       </div>
 
       {/* Hero Banner Buttons */}
-      <div className='absolute flex md:bottom-36 md:right-14 bottom-20 right-8 w-[calc(100%-4rem)] md:w-auto gap-3'>
+      <div className='absolute flex md:bottom-36 md:left-14 bottom-20 right-8 w-[calc(100%-4rem)] md:w-auto gap-3'>
         <Link
           to='/collections/mens'
-          className='bg-white text-center font-poppins flex-1 md:flex-initial font-bold px-8 py-3 rounded hover:bg-primary transition-colors hover:text-white'
+          className='flex-1 px-8 py-3 font-bold text-center transition-colors bg-white rounded font-poppins md:flex-initial hover:bg-primary hover:text-white'
         >
           SHOP MEN
         </Link>
         <Link
           to='/collections/womens'
-          className='bg-white text-center font-poppins flex-1 md:flex-initial font-bold px-8 py-3 rounded hover:bg-primary transition-colors hover:text-white'
+          className='flex-1 px-8 py-3 font-bold text-center transition-colors bg-white rounded font-poppins md:flex-initial hover:bg-primary hover:text-white'
         >
           SHOP WOMEN
         </Link>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default HeroBanner;
+export default HeroBanner
